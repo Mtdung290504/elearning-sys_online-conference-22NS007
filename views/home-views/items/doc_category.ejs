@@ -1,0 +1,22 @@
+<details data-conteiner-of-doc-category-id="<%= categoryId %>">
+    <summary class="document-category" data-doc-category-id="<%= categoryId %>">
+        <h4><%= categoryName %></h4>
+        <div class="icon-box">
+            <div class="icon edit-icon edit-doc-icon" title="Xem và sửa"><i class="fas fa-edit"></i></div>
+            <div class="icon download-icon" title="download zip"><i class="fa fa-download" aria-hidden="true"></i></div>
+        </div>
+    </summary>
+    <div class="detail">
+        <input type="text" placeholder="Tìm tài liệu...">
+
+        <% listOfDocument.sort((a, b) => a.fileName.split('/')[1].split('-')[1].localeCompare(b.fileName.split('/')[1].split('-')[1])) %>
+        <% listOfDocument.forEach(({ id, fileName }) => { if(id == null) return;%>
+            <% 
+                const _fileName = fileName.split('/')[1];
+                const fileNameToDisplay = _fileName.substring(_fileName.indexOf('-') + 1);
+            %>
+            <a class="link-to-doc-in-list" target="_blank" data-doc-id="<%= id %>" href="uploads/<%= fileName %>"><%= fileNameToDisplay %></a>
+        <% }); %>
+
+    </div>
+</details>

@@ -1,0 +1,509 @@
+body .modal-container {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, .7);
+    opacity: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    cursor: pointer;
+    transition: .5s;
+}
+
+body.open-modal {
+    overflow: hidden;
+}
+
+.btn.red {
+    color: red !important;
+}
+
+body.open-modal .modal-container {
+    opacity: 1;
+    pointer-events: all;
+}
+
+body .modal-container .modal {
+    width: 95%;
+    height: 96vh;
+    background-color: #fff;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+}
+
+body .modal-container .modal .modal-header {
+    margin: 5px;
+    padding: 20px;
+    background-color: rgb(231, 231, 231);
+    font-weight: bold;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+}
+
+body .modal-container .modal .modal-body {
+    height: 90%;
+}
+
+body .modal-container .modal .modal-body .wrapper {
+    --margin: 5px;
+    margin: var(--margin);
+    padding: 10px 5px;
+    width: calc(100% - 2*var(--margin));
+    height: calc(100% - 2*var(--margin));
+    /* background-color: rgb(231, 231, 231); */
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib) {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.assign-homework) {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 10px;
+}
+
+/* body .modal-container .modal .modal-body .wrapper.edit-doc  */
+.ctn {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px gray;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:first-child {
+    display: block;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:first-child h3 {
+    margin: 5px 5px 10px 5px;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:first-child :is(input[type="text"], textarea, input[type="datetime-local"]) {
+    position: sticky;
+    top: 0;
+    min-width: 50%;
+    padding: 10px;
+    margin: 5px 5px 35px 5px;
+    border: 1px solid lightgray;
+    outline: none;
+}
+
+body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a{
+    display: inline-flex;
+    transition: .3s;
+    margin: 5px;
+    width: calc(50% - 3*5px);
+    padding: 10px 15px;
+    text-decoration: none;
+    color: var(--btn-color);
+    border: .5px solid lightgray;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid black; */
+}
+
+body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a:hover {
+    box-shadow: 1px 0px 8px gray;
+}
+body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a .text {
+    display: block;
+    min-width: 80px;
+    max-width: 90%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipse;
+    overflow: hidden;
+}
+body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a .fa-trash {
+    cursor: pointer;
+    padding: 10px;
+    background-color: rgb(231, 231, 231);
+}
+body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a .fa-trash:hover {
+    transition: .3s;
+    background-color: lightgray;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:nth-child(2) .input-box{
+    display: block;
+    padding: 10px;
+}
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:nth-child(2) .input-box label {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:nth-child(2) .input-box input {
+    display: block;
+    width: calc(80% - 2*10px);
+    margin: 10px;
+    outline: none;
+    border: 1px solid lightgray;
+    padding: 10px;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:nth-child(2) .input-box .btn {
+    transition: .3s;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    height: fit-content;
+    background-color: #f4f4f4;
+    color: var(--btn-color);
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.edit-doc,.student-manage,.edit-quest-lib,.assign-homework) .ctn:nth-child(2) .input-box .btn:hover {
+    background-color: rgb(231, 231, 231);
+    box-shadow: 1px 0px 8px gray;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) tr {
+    border: .5px solid lightgray;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) th,td {
+    padding: 15px;
+    text-align: left;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) :is(th,td):is(:first-child,:nth-child(2))::before {
+    content: "";
+    border-left: 5px solid var(--btn-color);
+    margin-right: 20px;
+}
+
+/* body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) th {
+    text-align: center;
+} */
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) th:first-child {
+    width: 25%;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) th:nth-child(3) {
+    width: 20%;
+}
+
+/* body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) td:is(:first-child, :nth-child(3)) {
+    text-align: center;
+    
+} */
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage) .delete-btn {
+    text-align: center;
+    cursor: pointer;
+    transition: .5s;
+}
+body .modal-container .modal .modal-body .wrapper:is(.student-manage) .delete-btn:hover {
+    background-color: rgba(255, 0, 0, .1);
+}
+body .modal-container .modal .modal-body .wrapper:is(.student-manage) .delete-btn::before {
+    color: red;
+    content: 'Xóa khỏi lớp';
+    font-weight: 600;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) th {
+    background-color: var(--btn-color);
+    color: #fff;
+    font-weight: bold;
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.student-manage)  .ctn:nth-child(1) table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.quest-ctn {
+    margin-block: 25px;
+    padding-block: 10px;
+    padding-inline: 20px;
+    margin-left: 20px;
+    background-color: #f2f2f2;
+    width: calc(100% - 20px);
+}
+.quest {
+    padding: 4px;
+    border-left: 10px solid var(--btn-color);
+    margin-bottom: 20px;
+    padding-left: 10px;
+    box-shadow: 2px 2px 5px var(--btn-color);
+    position: relative;
+}
+
+.quest.new::before {
+    content: "Mới";
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: block;
+    background-color: green;
+    color: white;
+    position: absolute;
+    top: -2px;
+    right: -34px;
+}
+
+.quest .quest-content {
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.quest-content::before {
+    content: "Câu hỏi id - " attr(data-quest-id) ":";
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.edit-icon, .right-icon {
+    margin-left: 5px;
+    cursor: pointer;
+    padding: 3px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.edit-icon {
+    margin-left: 10px;
+    background-color: var(--btn-color);
+}
+
+.right-icon {
+    background-color: green;
+}
+
+.quest-ctn li {
+    list-style-type: upper-alpha;
+}
+
+.quest-answers {
+    padding: 1px 10px;
+    line-height: 1.5;
+}
+
+.quest-answer {
+    padding: 5px;
+    border-radius: 5px;
+    line-height: 1.3;
+    margin-bottom: 5px;
+}
+
+.quest-answer.right {
+    background-color: rgba(0, 255, 0, .3);
+}
+
+.quest-answer.right .right-icon {
+    display: none;
+}
+
+.doc-list {
+    margin-bottom: 10px;
+}
+
+.doc-list .doc-category-name {
+    border-left: 15px solid #f4f4f4;
+    background-color: var(--btn-color);
+    color: #fff;
+    padding-left: 10px;
+    padding-block: 5px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.doc-list ul.doc-ctn {
+    display: block;
+    padding: 1px 30px;
+    line-height: 2;
+}
+ul.doc-ctn li {
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+}
+ul.doc-ctn li:hover {
+    background-color: #fff;
+    border-left: 5px solid var(--btn-color);
+}
+.doc-list label {
+    display: inline-block;
+    width: 90%;
+}
+
+.doc-list :is(input, label)  {
+    cursor: pointer;
+}
+
+.doc-list input {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.doc-list li {
+    list-style-type: none;
+}
+
+.form-box {
+    --margin: 30px;
+    width: calc(100% - 2*var(--margin));
+    margin: var(--margin);
+    padding: 10px;
+    border-left: 10px solid var(--btn-color);
+}
+
+.form-box label {
+    display: inline-block;
+    background-color: var(--btn-color);
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 5%;
+    min-width: 25%;
+}
+.form-box :is(input[type="text"], textarea, input[type="datetime-local"]) {
+    width: 70%;
+    position: static;
+    margin-block: 0 !important;
+    height: 38px;
+    min-height: 38px;
+    max-height: 150px;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+.form-row :is(a.btn, input[type="reset"]) {
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    text-align: center;
+    width: 35%;
+
+    transition: .3s;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    height: fit-content;
+    background-color: #f4f4f4;
+    color: var(--btn-color);
+    font-weight: 600;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+.form-row input[type="reset"]:hover {
+    background-color: rgb(231, 231, 231);
+    box-shadow: 1px 0px 8px gray;
+}
+
+.form-box textarea {
+    resize: vertical;
+    padding: 10px;
+    outline: none;
+    border: .5px solid lightgray;
+}
+
+.note {
+    /* text-transform: uppercase; */
+    padding: 10px;
+    color: var(--btn-color);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+td.submitted {
+    background-color: rgba(0, 255, 0, .2);
+}
+td.submitted::before {
+    content: "Đã nộp bài";
+    color: green;
+    font-weight: 600;
+    place-items: center;
+    display: grid;
+}
+
+td.submitted-late {
+    background-color: rgba(190, 130, 0, .2);
+}
+td.submitted-late::before {
+    content: "Nộp bài trễ";
+    color: rgb(190, 130, 0);
+    font-weight: 600;
+    place-items: center;
+    display: grid;
+}
+
+td.unsubmitted {
+    background-color: rgb(180, 0, 0, .2);
+}
+td.unsubmitted::before {
+    content: "Chưa nộp bài";
+    color: rgb(180, 0, 0);
+    font-weight: 600;
+    place-items: center;
+    display: grid;
+}
+
+@media screen and (max-width: 730px) {
+    body .modal-container .modal {
+        width: 90%;
+        height: 90vh;
+    }
+
+    body .modal-container .modal .modal-body .wrapper.edit-doc {
+        grid-template-columns: 1fr;
+    }
+
+    body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child {
+        padding: 5px;
+    }
+
+    body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child input[type="text"] {
+        min-width: 0px;
+        width: calc(100% - 2*5px);
+    }
+
+    body .modal-container .modal .modal-body .wrapper.edit-doc .ctn:first-child a {
+        display: flex;
+        transition: .3s;
+        margin: 5px;
+        width: calc(100% - 2*5px);
+    }
+
+    body .modal-container .modal .modal-body .wrapper {
+        padding: 5px;
+    }
+}
+
+body .modal-container .modal .modal-body .wrapper:is(.create-meeting) {
+    grid-template-columns: 1fr;
+    place-items: center;
+}
+body .modal-container .modal .modal-body .wrapper:is(.create-meeting) > .ctn {
+    width: 70%;
+}

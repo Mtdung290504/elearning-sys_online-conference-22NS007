@@ -1,0 +1,50 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: black;
+}
+::-webkit-scrollbar-track {
+    background-color: lightgray;
+}
+body {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    --btn-color: #0f6cbf;
+}
+
+:is(textarea, input) {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+:is(h1, h2, h3, h4, h5) {
+    font-weight: 600;
+}
+
+a.btn {
+    transition: .3s;
+    display: block;
+    text-decoration: none;
+    padding: 10px;
+    height: fit-content;
+    width: fit-content;
+    min-width: 100px;
+    background-color: #f4f4f4;
+    color: var(--btn-color);
+    font-weight: 600;
+}
+
+a.btn:hover {
+    background-color: rgb(231, 231, 231);
+    box-shadow: 1px 0px 8px gray;
+}
+
+.red {
+    color: rgb(255, 60, 60);;
+}

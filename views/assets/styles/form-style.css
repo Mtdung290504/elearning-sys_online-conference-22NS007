@@ -1,0 +1,173 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    /* background: rgb(50, 50, 60); */
+    --debug: 0px;
+    --debug-border: var(--debug) solid black;
+    --white-border: 3px solid white;
+    border: var(--debug-border);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    background-color: white;
+    padding: 5px;
+    margin-top: -5%;
+    min-height: 600px;
+    
+}
+
+.title {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    background-color: lightgray;
+    border: var(--white-border);
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.form-ctn {
+    display: flex;
+    padding: 15px;
+    height: fit-content;
+    align-items: center;
+    border: var(--white-border);
+    box-shadow: 2px 2px 15px #222;
+}
+
+.form-ctn h3 {
+    display: flex;
+    padding: 0 50px;
+    height: 100%;
+}
+
+.form {
+    /* border: var(--debug-border); */
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 15px;
+    width: 400px;
+    border-radius: 10px;
+    align-self: self-start;
+}
+
+.form h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form input:is([type="text"], [type="password"], [type="submit"]) {
+    border: none;
+    outline: none;
+    border: 1px solid gray;
+    font-size: .95rem;
+    padding: 10px 15px;
+    margin: 15px 0 0 0;
+    width: 100%;
+    /* border-radius: 10px; */
+}
+
+.form input[type="submit"] {
+    border: none;
+    background-color: var(--btn-color);
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+    margin-top: 40px;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #003c70;
+}
+
+.form input:is([type="text"], [type="password"]):focus {
+    border: 1px solid #000;
+}
+
+.form input:is([type="text"], [type="password"])::placeholder {
+    color: rgb(180, 180, 180);
+}
+
+.form .remember-box {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /* border: var(--debug-border); */
+}
+
+.form .remember-box input[type="checkbox"] {
+    display: block;
+    cursor: pointer;
+    margin: 4px 10px 0 0;
+}
+
+.form .remember-box label {
+    display: block;
+    font-size: .95rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.form label {
+    font-size: .95rem;
+}
+
+.form label.error {
+    color: red;
+}.form label.error::after {
+    content: "Tài khoản hoặc mật khẩu không chính xác!";
+}
+form label.re-pw-status {
+    color: red;
+}
+.form label.pw-status:is(.not-satisfy, .weak) {
+    color: red;
+}.form label.pw-status.not-satisfy::after {
+    content: "Chưa đạt yêu cầu"
+}.form label.pw-status.weak::after {
+    content: "Yếu";
+}
+
+.form label.pw-status.medium {
+    color: rgb(170, 145, 0);
+}.form label.pw-status.medium::after {
+    content: "Trung bình";
+}
+
+form label.pw-status.strong {
+    color: green;
+}.form label.pw-status.strong::after {
+    content: "Mạnh";
+}
+
+.form label.pw-status:is(.not-satisfy, .weak, .medium, .strong)::before {
+    content: "*Mức độ: ";
+}
+
+.form label.error::before {
+    content: "*";
+}
+
+.form a {
+    text-decoration: none;
+    color: var(--btn-color);
+    align-self: center;
+    margin-top: 10px;
+    font-size: .95rem;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+:not(input) {
+    user-select: none;
+}

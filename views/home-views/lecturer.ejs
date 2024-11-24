@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/styles/shared-style.css">
+    <link rel="stylesheet" href="assets/styles/home-style.css">
+    <link rel="stylesheet" href="assets/styles/modal-style.css">
+</head>
+<body class="">
+    <%- include('../common/header', { user, role }) %>
+    
+    <div class="body open-side-nav">
+        <%- include('../common/nav', { rootUrl, listOfClasses, role }) %>
+
+        <div class="main">
+            <div class="ctn">
+                <h3 class="title">CÁC LỚP HỌC CỦA TÔI</h3>
+
+                <div class="class-manage-box">
+                    <input type="text" name="find-class" id="find-class" placeholder="Tìm lớp học...">
+                    <a id="create-class" href="javascript:void(0)">+ Tạo lớp học mới</a>
+                </div>
+
+                <!-- LIST OF CLASSES HERE -->
+                <div class="class-box">
+                    <% listOfClasses.forEach(cls => { %>
+                        <%- include('../common/class_grid_item', { rootUrl, cls, user, role }) %>
+                    <% }) %>
+                </div>
+
+            </div>
+
+            <div class="ctn">
+                <details class="big-ctn" id="document-category-container" open>
+                    <summary class="document-category big-category title">KHO TÀI LIỆU</summary>
+                    <div class="class-manage-box">
+                        <input type="text" name="find-document" id="find-document" placeholder="Tìm danh mục...">
+                        <a id="new-doc-category" href="javascript:void(0)">+ Danh mục mới</a>
+                    </div>
+
+                    <!-- DOC CATEGORY ITEMS HERE -->
+                    <% for (const categoryId in listOfDocCategoryAndDoc) { %>
+                        <% const { categoryName, listOfDocument } = listOfDocCategoryAndDoc[categoryId]; %>
+                        <%- include('./items/doc_category.ejs', { categoryId, categoryName, listOfDocument }); %>
+                    <% } %>
+
+                </details>
+            </div>
+
+        </div>
+    </div>
+    
+    <%- include('../common/footer') %>
+    <%- include('../common/modal.ejs') %>
+
+    <script src="assets/scripts/model/RequestHandler.class.js"></script>
+    <script src="assets/scripts/model/ModalContent.class.js"></script>
+    <script src="assets/scripts/shared-actions.js"></script>
+    <script src="assets/scripts/teacher-homepage.js"></script>
+</body>
+</html>

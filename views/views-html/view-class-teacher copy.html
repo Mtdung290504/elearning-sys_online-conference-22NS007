@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../assets/styles/shared-style.css">
+    <link rel="stylesheet" href="../assets/styles/home-style.css">
+    <link rel="stylesheet" href="../assets/styles/modal-style.css">
+    <link rel="stylesheet" href="../assets/styles/class-view-style.css">
+</head>
+<body class="open-modal">
+
+    <div class="header">
+        <div class="btn">
+            <img src="../assets/images/menu.svg" alt="">
+        </div>
+        <div class="user">
+            <div class="user-name">NGÔ ZERO - GV</div>
+            <div class="avatar">
+                <img src="../assets/images/avt.png" alt="avatar">
+            </div>
+            <div class="hidden-options">
+                <a href="">Cá nhân</a>
+                <a href="">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="body">
+
+        <div class="side-nav">
+            <a class="link-title">Điều hướng</a>
+            <a href="">Dashboard</a>
+            <!-- <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a> -->
+            <a class="link-title">Các lớp học của tôi</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+        </div>
+
+        <div class="main">
+
+            <div class="ctn">
+                <h2 class="class-name" members="40">Vi điều khiển (4) - k22</h2>
+
+                <details class="big-ctn class-view-detail" open>
+                    <summary><h3 class="title">TÙY CHỌN</h3></summary>
+                    <div class="chooses">
+                        <a href="javascript:void(0)" class="btn">quản lý sinh viên</a>
+                        <a href="javascript:void(0)" class="btn">quản lý tài liệu lớp</a>
+                        <a href="javascript:void(0)" class="btn">giao bài tập</a>
+                        <a href="javascript:void(0)" class="btn">giao bài kiểm tra</a>
+                        <a href="javascript:void(0)" class="btn red">giải tán lớp</a>                        
+                    </div>
+                </details>
+
+                <details class="big-ctn class-view-detail" open>
+                    <summary><h3 class="title">CỘNG TÁC VIÊN</h3></summary>
+
+                    <form class="add-collaborator-form">
+                        <input
+                            type="text"
+                            class="add-collaborator-input"
+                            placeholder="Nhập email hoặc số điện thoại để thêm cộng tác viên"
+                            required
+                        />
+                        <button type="submit" class="add-collaborator-button">Thêm</button>
+                    </form>
+
+                    <ul class="collaborator-list">
+
+                        <li class="collaborator-item">
+                            <div class="collaborator-info">
+                                <p class="collaborator-name">Nguyễn Văn A</p>
+                                <p class="collaborator-contact">
+                                    <span>a@example.com</span>
+                                    <span>0901234567</span>
+                                </p>
+                            </div>
+                            <button class="delete-button">Xóa</button>
+                        </li>
+
+                        <li class="collaborator-item">
+                            <div class="collaborator-info">
+                                <p class="collaborator-name">Trần Thị B</p>
+                                <p class="collaborator-contact">
+                                    <span>b@example.com</span>
+                                    <span>0987654321</span>
+                                </p>
+                            </div>
+                            <button class="delete-button">Xóa</button>
+                        </li>
+
+                        <!-- Thêm các cộng tác viên khác tại đây -->
+
+                    </ul>
+                    
+                </details>
+                
+                <details class="big-ctn class-view-detail" open>
+                    <summary><h3 class="title">TÀI LIỆU LỚP</h3></summary>
+                    <div class="documents">
+                        <a href="">Giáo trình</a>
+                        <a href="">Đề cương chi tiết</a>
+                        <a href="">...</a>
+                    </div>
+                </details>
+
+                <details class="big-ctn class-view-detail" open>
+                    <summary><h3 class="title class-view-title">BÀI TẬP LỚP<a href="javascript:void(0)" id="add-exercise" class="btn">giao bài tập</a></h3></h3></summary>
+                    <div class="exercises">
+
+                        <details class="exercise">
+                            <summary>
+                                <h4 class="exercise-name">Bài tập 4/7/2024</h4>
+                                <div style="display: flex;">
+                                    <div class="icon view-detail" title="Xem chi tiết" data-ex-id="ex001"><i class="fa-solid fa-eye"></i></div>
+                                    <div class="icon edit" title="Sửa" data-ex-id="ex001"><i class="fas fa-edit"></i></div>
+                                    <div class="icon delete" title="Xóa" data-ex-id="ex001"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                </div>
+                            </summary>
+                            <p class="desc">
+                                - Làm lab 1 và 2, nén lại và nộp lên hệ thống.
+                            </p>
+                            <p class="attach">
+                                <a href="">Lab1</a>
+                                <a href="">Lab2</a>
+                            </p>
+                            <p class="limit" time="4/7/2024 - 11/7/2024"></p>
+                            <p class="status" limit="40" current="26"></p>
+                        </details>
+
+                        <details class="exercise">
+                            <summary>
+                                <h4 class="exercise-name">Bài tập 4/7/2024</h4>
+                                <div style="display: flex;">
+                                    <div class="icon view-detail" title="Xem chi tiết" data-ex-id="ex001"><i class="fa-solid fa-eye"></i></div>
+                                    <div class="icon edit" title="Sửa" data-ex-id="ex001"><i class="fas fa-edit"></i></div>
+                                    <div class="icon delete" title="Xóa" data-ex-id="ex001"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                </div>
+                            </summary>
+                            <p class="desc">
+                                - Làm lab 3 và 4, nén lại và nộp lên hệ thống.
+                            </p>
+                            <p class="attach">
+                                <a href="">Lab3</a>
+                                <a href="">Lab4</a>
+                            </p>
+                            <p class="limit" time="4/7/2024 - 11/7/2024"></p>
+                            <p class="status" limit="40" current="26"></p>
+                        </details>
+
+                    </div>
+                </details>
+
+                <details class="big-ctn class-view-detail" open>
+                    <summary><h3 class="title class-view-title">CÁC BUỔI HỌC TRỰC TUYẾN<a href="javascript:void(0)" id="add-exercise" class="btn">Lên lịch họp</a></h3></h3></summary>
+                    <div class="meetings">
+
+                        <details class="meeting ended">
+                            <summary>
+                                <h4 class="meeting-name">Học trực tuyến ngày 24/11/2024</h4>
+                                <div style="display: flex;">
+                                    <div class="icon view-detail" title="Tham gia" data-meet-code="ex001"><i class="fa-solid fa-phone"></i></div>
+                                    <div class="icon edit" title="Sửa" data-meet-id="ex001"><i class="fas fa-edit"></i></div>
+                                    <div class="icon delete" title="Xóa" data-meet-id="ex001"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                </div>                                
+                            </summary>
+                            <p class="desc">
+                                Học chương IV
+                            </p>
+                            <p class="expected-time" time="4/7/2024 - 11/7/2024"></p>
+                            <p class="meeting-status"></p>
+                        </details>
+
+                        <details class="meeting started">
+                            <summary>
+                                <h4 class="meeting-name">Học trực tuyến ngày 25/11/2024</h4>
+                                <div style="display: flex;">
+                                    <div class="icon view-detail" title="Tham gia" data-meet-code="ex001"><i class="fa-solid fa-phone"></i></div>
+                                    <div class="icon edit" title="Sửa" data-meet-id="ex001"><i class="fas fa-edit"></i></div>
+                                    <div class="icon delete" title="Xóa" data-meet-id="ex001"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                </div>                                
+                            </summary>
+                            <p class="desc">
+                                Học chương V
+                            </p>
+                            <p class="expected-time" time="4/7/2024 - 11/7/2024"></p>
+                            <p class="meeting-status"></p>
+                        </details>
+
+                        <details class="meeting not-started">
+                            <summary>
+                                <h4 class="meeting-name">Học trực tuyến ngày 26/11/2024</h4>
+                                <div style="display: flex;">
+                                    <div class="icon view-detail" title="Tham gia" data-meet-code="ex001"><i class="fa-solid fa-phone"></i></div>
+                                    <div class="icon edit" title="Sửa" data-meet-id="ex001"><i class="fas fa-edit"></i></div>
+                                    <div class="icon delete" title="Xóa" data-meet-id="ex001"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                </div>                                
+                            </summary>
+                            <p class="desc">
+                                Học chương VI
+                            </p>
+                            <p class="expected-time" time="4/7/2024 - 11/7/2024"></p>
+                            <p class="meeting-status"></p>
+                        </details>
+
+                    </div>
+                </details>
+
+            </div>
+
+            <div class="ctn">
+                <h2 class="title ttitle">MỜI THÀNH VIÊN</h2>
+
+                <div class="invite-container">
+                    <div class="invite-header">
+                        <span class="invite-status">Trạng thái mã mời:</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="invite-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="invite-link-container">
+                        <input 
+                            type="text" 
+                            id="invite-link" 
+                            value="https://example.com/invite?code=12345" 
+                            readonly>
+                        <button id="copy-button">Copy</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer"></div>
+
+    <div class="modal-container">
+        <div class="modal">
+            <div class="modal-header">Lên lịch họp trực tuyến</div>
+            <div class="modal-body">
+                <div class="wrapper create-meeting assign-homework">
+    
+                    <div class="ctn">
+                        <h3>THÔNG TIN</h3>
+                        <div class="form-box">
+                            <div class="input-box">
+                                <form action="">
+                                    <div class="form-row">
+                                        <label for="ex-name">Tên cuộc họp</label>
+                                        <input id="ex-name" type="text" placeholder="Tên cuộc họp" required>
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="ex-descriptions">Mô tả</label>
+                                        <textarea name="" id="ex-descriptions" placeholder="Mô tả" required></textarea>
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="ex-deadline">Thời hạn dự kiến</label>
+                                        <input type="datetime-local" name="" id="ex-deadline" required>
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="reset" value="Tạo lại">
+                                        <a href="javascript:void(0)" class="btn">Thêm</a>
+                                    </div>                                    
+                                </form>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="../assets/scripts/shared-actions.js"></script>
+    <script src="../assets/scripts/Modal-content.class.js"></script>
+
+    <script>
+        document.querySelectorAll('.delete-button').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const item = event.target.closest('.collaborator-item');
+                if (confirm('Bạn có chắc chắn muốn xóa cộng tác viên này không?')) {
+                    item.remove();
+                }
+            });
+        });
+        
+        document.getElementById('copy-button').addEventListener('click', () => {
+            const link = document.getElementById('invite-link');
+            link.select(); // Chọn toàn bộ nội dung
+            link.setSelectionRange(0, 99999); // Đảm bảo hoạt động trên mobile
+            navigator.clipboard.writeText(link.value).then(() => {
+                alert("Đã sao chép mã mời!");
+            });
+        });
+
+        // Truy cập form và danh sách cộng tác viên
+        const form = document.querySelector('.add-collaborator-form');
+        const input = document.querySelector('.add-collaborator-input');
+        const collaboratorList = document.querySelector('.collaborator-list');
+
+        // Xử lý sự kiện submit form
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Ngăn chặn reload trang
+            const value = input.value.trim();
+
+            if (value) {
+                // Tạo một cộng tác viên mới
+                const newCollaborator = document.createElement('li');
+                newCollaborator.classList.add('collaborator-item');
+                newCollaborator.innerHTML = `
+                    <div class="collaborator-info">
+                        <p class="collaborator-name">Tên chưa xác định</p>
+                        <p class="collaborator-contact">
+                            <span>${value}</span>
+                        </p>
+                    </div>
+                    <button class="delete-button">Xóa</button>
+                `;
+
+                // Thêm sự kiện xóa cho nút "Xóa"
+                newCollaborator.querySelector('.delete-button').addEventListener('click', () => {
+                    if (confirm('Bạn có chắc chắn muốn xóa cộng tác viên này không?')) {
+                        newCollaborator.remove();
+                    }
+                });
+
+                // Thêm cộng tác viên vào danh sách
+                collaboratorList.appendChild(newCollaborator);
+
+                // Reset input
+                input.value = '';
+            } else {
+                alert('Vui lòng nhập email hoặc số điện thoại!');
+            }
+        });
+    </script>
+</body>
+</html>

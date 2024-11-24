@@ -1,0 +1,12 @@
+<div class="side-nav">
+    <a class="link-title">Điều hướng</a>
+    <a href="<%= rootUrl %>/">Dashboard</a>
+    <a class="link-title">Các lớp học của tôi</a>
+    <% listOfClasses.forEach(cls => { %>
+        <% if (role === 'GV') { %>
+            <a href="<%= rootUrl %>/class/<%= cls.id %>"><%= cls.name %></a>
+        <% } else {%> 
+            <a href="<%= rootUrl %>/class/<%= cls.id %>"><%= cls.name %> - <%= cls.lecturer_name %></a>
+        <% } %>
+    <% }) %>
+</div>

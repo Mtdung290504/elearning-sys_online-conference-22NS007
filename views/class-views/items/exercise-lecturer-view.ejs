@@ -1,0 +1,21 @@
+<%# exercise{ id, name, descriptions, attachFiles, start_time, end_time }, members, rootUrl %>
+<details id="exercise-<%= exercise.id %>" class="exercise">
+    <summary>
+        <h4 class="exercise-name"><%= exercise.name %></h4>
+        <div style="display: flex;">
+            <div onclick="viewDetailExercise(event, '<%= exercise.id %>')" class="icon view-detail" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></div>
+            <div onclick="editExercise(event, '<%= exercise.id %>')" class="icon edit" title="Sửa"><i class="fas fa-edit"></i></div>
+            <div onclick="deleteExercise(event, '<%= exercise.id %>')" class="icon delete" title="Xóa"><i class="fa fa-trash" aria-hidden="true"></i></div>
+        </div>
+    </summary>
+    <p class="desc" <%- exercise.descriptions ? '' : 'style="display: none;"' %>>
+        <%- exercise.descriptions.replaceAll('\n', '<br>') %>
+    </p>
+    <p class="attach" <%- exercise.attachFiles.length ? '' : ' style="display: none;" ' %>>
+        <% exercise.attachFiles.forEach(({ file_name }) => { %>
+            <a target="_blank" href="<%= rootUrl %>/uploads/<%= file_name %>"><%= file_name.substring(file_name.indexOf('-') + 1) %></a>
+        <% }) %>
+    </p>
+    <p class="limit" time=""><time><%= exercise.start_time %></time> đến <time><%= exercise.end_time %></time></p>
+    <p class="status" limit="<%= members %>" current="<%= exercise.submission_count %>"></p>
+</details>

@@ -1,0 +1,18 @@
+<details id="exercise-<%= exercise.id %>" class="exercise <%= exercise.submission_status %>">
+    <summary>
+        <h4 class="exercise-name"><%= exercise.name %></h4>
+        <div style="display: flex;">
+            <div onclick="submitExercise(event, '<%= exercise.id %>')" class="icon upload" title="Nộp/Sửa bài nộp"><i class="fa-solid fa-upload"></i></div>
+        </div>
+    </summary>
+    <p class="desc" <%- exercise.descriptions ? '' : 'style="display: none;"' %>>
+        <%- exercise.descriptions.replaceAll('\n', '<br>') %>
+    </p>
+    <p class="attach" <%- exercise.attachFiles.length ? '' : ' style="display: none;" ' %>>
+        <% exercise.attachFiles.forEach(({ file_name }) => { %>
+            <a target="_blank" href="<%= rootUrl %>/uploads/<%= file_name %>"><%= file_name.substring(file_name.indexOf('-') + 1) %></a>
+        <% }) %>
+    </p>
+    <p class="limit" time=""><time><%= exercise.start_time %></time> đến <time><%= exercise.end_time %></time></p>
+    <p class="student-status <%= exercise.submission_status %>"></p>
+</details>

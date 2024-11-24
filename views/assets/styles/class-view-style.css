@@ -1,0 +1,599 @@
+.class-name {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    border-left: 10px solid var(--btn-color);
+}
+
+.class-name::after {
+    content: " (" attr(members) " Thành viên)";
+}
+
+.class-view-detail {
+    border: 1px solid lightgray;
+    transition: .5s;
+}
+
+.class-view-detail summary {
+    display: flex;
+    flex-direction: row;
+}
+
+.class-view-detail summary h3 {
+    margin-top: 5px !important;
+    width: 100%;
+    cursor: pointer;
+}
+
+.chooses {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: 15px;
+    row-gap: 10px;
+    column-gap: 15px;
+    text-transform: capitalize;
+}
+
+body .open-side-nav .chooses {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.chooses a.btn {
+    width: 100%;
+    margin: 0px;
+    display: inline-block;
+    text-align: center;
+}
+
+.chooses a.btn.red {
+    color: rgb(255, 60, 60);
+}
+
+.group-title {
+    align-items: center;
+}
+
+.group {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.group-name::after {
+    display: block;
+    content: "(" attr(data-group-quantity) "/" attr(data-group-limit) ") ►";
+}
+
+.list-std span {
+    text-decoration: none;
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 3px;
+    padding: 1px;
+    color: var(--btn-color);
+    text-transform: uppercase;
+}
+
+.list-std span::before {
+    content: attr(data-sid) " - ";
+}
+
+.exercises, .meeting, .documents {
+    margin-inline: 20px;
+    margin-block: 5px;
+    /* padding: 10px; */
+}
+
+.exercise.submitted:not([open])::after {
+    content: "Đã nộp bài";
+    font-weight: 600;
+    color: green;
+    display: block;
+    background-color: rgba(0, 255, 0, .2);
+    padding: 5px 20px;
+}
+.exercise.submitted-late:not([open])::after {
+    content: "Nộp bài trễ";
+    font-weight: 600;
+    color: rgb(190, 130, 0);
+    display: block;
+    padding: 5px 20px;
+    background-color: rgba(190, 130, 0, .2);
+}
+.exercise.unsubmitted:not([open])::after {
+    content: "Chưa nộp bài";
+    font-weight: 600;
+    color: rgb(180, 0, 0);
+    display: block;
+    background-color: rgba(180, 0, 0, 0.2);
+    padding: 5px 20px;
+}
+
+.meeting.not-started:not([open])::after {
+    content: "Chưa bắt đầu";
+    font-weight: 600;
+    color: rgb(190, 130, 0);
+    display: block;
+    background-color: rgba(190, 130, 0, .2);
+    padding: 5px 20px;
+}
+.meeting.started:not([open])::after {
+    content: "Đang diễn ra";
+    font-weight: 600;
+    color: green;
+    display: block;
+    padding: 5px 20px;
+    background-color: rgba(0, 255, 0, .2);
+}
+.meeting.ended:not([open])::after {
+    content: "Đã kết thúc";
+    font-weight: 600;
+    color: rgb(180, 0, 0);
+    display: block;
+    background-color: rgba(180, 0, 0, 0.2);
+    padding: 5px 20px;
+}
+.documents {
+    background-color: #f4f4f4;
+    padding: 10px
+}
+
+.exercise, .meeting, .documents {
+    transition: .3s;
+    box-shadow: 1px 1px 5px var(--btn-color);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-left: 10px solid var(--btn-color);
+}
+
+/* :is(.exercise, .meeting):hover {
+    box-shadow: 0px 0px 15px var(--btn-color);
+} */
+
+:is(.exercise, .meeting) summary {
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.exercise-name, .meeting-name {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--btn-color);
+    border-left: 10px solid var(--btn-color);
+    padding-left: 10px;
+}
+
+:is(.exercise, .meeting) summary .icon {
+    width: 30px;
+    height: 30px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 1px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    margin: 0 5px;
+    color: var(--btn-color);
+}
+
+:is(.exercise, .meeting) summary .icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+:is(.exercise, .meeting) summary .icon:hover {
+    background-color: lightgray;
+}
+
+p:is(.desc, .attach, .limit, .status, .student-status, .expected-time, .meeting-status){
+    display: block;
+    padding: 10px 20px;
+    padding-left: 30px;
+    font-size: 1rem;
+    background-color: #f4f4f4;
+    border-left: 5px solid var(--btn-color);
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.documents a, p.attach a {
+    transition: .3s;
+    display: inline-block;
+    padding: 5px 10px;
+    color: #fff;
+    background-color: gray;
+    border-radius: 5px;
+    text-decoration: none;
+    width: fit-content;
+    margin-right: 10px;
+}
+p.attach a {
+    margin: 5px 2px;
+}
+.documents a {
+    display: inline-block;
+    margin: 5px;
+}
+.documents a:hover, p.attach a:hover {
+    /* text-decoration: underline; */
+    background-color: var(--btn-color);
+    color: white;
+}
+
+.documents a, p.attach a::before {
+    content: "";
+}
+
+p.desc::before {
+    content: "Mô tả:";
+}
+
+p.attach::before {
+    content: "File đính kèm:";
+}
+
+p.limit::before {
+    content: "Thời hạn: " attr(time);
+}
+
+p.status::before {
+    content: "Đã nộp: " attr(current) "/" attr(limit);
+    /* color: green; */
+}
+
+p.expected-time::before {
+    content: "Thời gian dự kiến: " attr(time);
+}
+
+p:is(.limit, .status, .attach, .desc, .expected-time)::before {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: -15px;
+    color: var(--btn-color);
+}
+
+h2.ttitle {
+    margin-bottom: 25px !important;
+    background-color: white !important;
+}
+
+p.student-status.submitted {
+    background-color: rgba(0, 255, 0, .2);
+}
+p.student-status.submitted::before {
+    content: "Trạng thái: Đã nộp bài";
+    color: green;
+}
+p.student-status.submitted-late {
+    background-color: rgba(190, 130, 0, .2);
+}
+p.student-status.submitted-late::before {
+    content: "Trạng thái: Nộp bài trễ";
+    color: rgb(190, 130, 0);
+}
+p.student-status.unsubmitted {
+    background-color: rgb(180, 0, 0, .2);
+}
+p.student-status.unsubmitted::before {
+    content: "Trạng thái: Chưa nộp bài";
+    color: rgb(180, 0, 0);
+}
+p.student-status:is(.submitted, .submitted-late, .unsubmitted)::before {
+    font-weight: 700;
+    margin-left: -15px;
+}
+
+.meeting.not-started >.meeting-status {
+    background-color: rgba(190, 130, 0, .2);
+}
+.meeting.not-started > p.meeting-status::before {
+    content: "Trạng thái: Chưa bắt đầu";
+    color: rgb(190, 130, 0);
+}
+.meeting.started > p.meeting-status {
+    background-color: rgba(0, 255, 0, .2);
+}
+.meeting.started > p.meeting-status::before {
+    content: "Trạng thái: Đang diễn ra";
+    color: green;
+}
+.meeting.ended > p.meeting-status {
+    background-color: rgb(180, 0, 0, .2);
+}
+.meeting.ended > p.meeting-status::before {
+    content: "Trạng thái: Đã kết thúc";
+    color: rgb(180, 0, 0);
+}
+:is(.not-started, .started, .ended) > p.meeting-status::before {
+    font-weight: 700;
+    margin-left: -15px;
+}
+
+.group-title.un-joined h3::after {
+    content: "  *Chưa tham gia";
+    color: rgb(180, 0, 0);
+}
+
+.group-title.joined h3::after {
+    content: "  *Thuộc nhóm " attr(subgroup);
+    color: green;
+}
+h3.title.class-view-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h3.title.class-view-title a.btn {
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+time {
+    display: inline-block;
+    border-bottom: 4px solid var(--btn-color);
+    margin: 5px;
+    padding-bottom: 2px;
+    font-weight: 600;
+}
+
+progress {
+    position: relative;
+    flex: 1; height: 40px;
+}
+
+progress::after {
+    content: attr(value) "/" attr(max) " Sinh viên";
+    display: block;
+    position: absolute;
+    top: 90%; left: 50%;
+    transform: translateX(-50%);
+    color: black;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 730px) {
+    .exercises, .meeting, .documents {
+        margin: 5px;
+    }
+
+    .chooses {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 5px;
+    }
+
+    .class-name {
+        margin-bottom: 15px;
+    }
+
+    .class-view-detail {
+        margin-bottom: 10px !important;
+    }
+
+    .title {
+        margin: 5px;
+    }
+}
+
+/* Tổng thể */
+.invite-container {
+    font-family: Arial, sans-serif;
+    padding: 1em;
+    max-width: 500px;
+    margin: auto;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header: Trạng thái mã mời */
+.invite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.invite-status {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Toggle nút bật/tắt */
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: red;
+    border-radius: 34px;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.toggle input:checked + .toggle-slider {
+    background-color: green; /* Xanh lá (Mở) */
+}
+
+.toggle input:checked + .toggle-slider::before {
+    transform: translateX(26px);
+}
+
+/* Link mời */
+.invite-link-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+#invite-link {
+    flex: 1;
+    padding: 0.5em;
+    font-size: 0.95rem;
+    color: #555;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    user-select: all;
+    cursor: pointer;
+    margin-bottom: 0;
+    display: block;
+}
+
+#invite-link:focus {
+    border-color: green;
+}
+
+/* Nút copy */
+#copy-button {
+    padding: 0.5em 1em;
+    font-size: 0.95rem;
+    color: white;
+    background-color: var(--btn-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#copy-button:hover {
+    background-color: #2980b9;
+}
+
+/* Danh sách cộng tác viên */
+.collaborator-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.collaborator-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.collaborator-item:last-child {
+    border-bottom: none;
+}
+
+/* Thông tin cộng tác viên */
+.collaborator-info {
+    max-width: 70%;
+}
+
+.collaborator-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.collaborator-contact {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0.5em 0 0;
+    line-height: 1.4;
+    
+}
+
+.collaborator-contact > span {
+    display: block;
+    user-select: text;
+}
+
+.collaborator-contact > span::before {
+    content: "Liên hệ: ";
+}
+
+/* Nút xóa */
+.delete-button {
+    padding: 0.5em 1em;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+/* Form thêm cộng tác viên */
+.add-collaborator-form {
+    display: flex;
+    gap: 0.5em;
+    padding: 1em;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.add-collaborator-form > .add-collaborator-input {
+    flex-grow: 1;
+    padding: 0.5em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 0 !important;
+}
+
+.add-collaborator-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.5);
+}
+
+.add-collaborator-button {
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    background-color: var(--btn-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-collaborator-button:hover {
+    background-color: #2980b9;
+}

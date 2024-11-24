@@ -1,0 +1,16 @@
+<%# meeting{ id, class_id, name, description, start_time, end_time, meeting_code, status } %>
+<details id="meeting-<%= meeting.id %>" class="meeting <%= meeting.status %>">
+    <summary>
+        <h4 class="meeting-name"><%= meeting.name %></h4>
+        <div style="display: flex;">
+            <% if(meeting.status === 'started') { %>
+                <div onclick="joinMeeting(event, '<%= meeting.meeting_code %>')" class="icon view-detail" title="Tham gia"><i class="fa-solid fa-phone"></i></div>
+            <% } %>
+        </div>
+    </summary>
+    <p class="desc" <%- meeting.description ? '' : 'style="display: none;"' %>>
+        <%- meeting.description.replaceAll('\n', '<br>') %>
+    </p>
+    <p class="expected-time" time=""><time><%= meeting.start_time %></time> đến <time><%= meeting.end_time %></time></p>
+    <p class="meeting-status"></p>
+</details>

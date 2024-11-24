@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/styles/shared-style.css" />
+    <link rel="stylesheet" href="assets/styles/form-style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title">
+            <h2>Hệ thống quản lý học tập trực tuyến</h2>
+        </div>
+        <div class="form-ctn">
+            <form id="signup-form" action="" class="form" method="" enctype="multipart/form-data">
+                <h2>Đăng ký</h2>
+                <input required type="text" name="signup-name" id="signup-name" placeholder="Họ và tên" />
+                <input required type="text" name="signup-id" id="signup-id"
+                    placeholder="Số điện thoại hoặc email (dùng để đăng nhập)" />
+                <label for="signup-id" class="re-pw-status"></label>
+                <input required type="password" name="signup-pw" id="signup-pw"
+                    placeholder="Mật khẩu (ít nhất 6 ký tự)" />
+                <label for="signup-pw" class="pw-status"></label>
+                <input required type="password" name="re-signup-pw" id="re-signup-pw" placeholder="Xác nhận mật khẩu" />
+                <label for="re-signup-pw" class="re-pw-status"></label>
+                <input type="submit" value="Đăng ký" />
+            </form>
+
+            <h3>Hoặc</h3>
+
+            <form id="login-form" action="" class="form" method="" enctype="multipart/form-data">
+                <h2>Đăng nhập</h2>
+                <input required type="text" name="login-id" id="login-id" placeholder="Số điện thoại hoặc email" />
+                <input required type="password" name="login-pw" id="login-pw" placeholder="Mật khẩu" />
+                <div class="remember-box">
+                    <input type="checkbox" name="remember" id="remember" />
+                    <label for="remember">Hiện mật khẩu</label>
+                </div>
+                <label for="aaa" class=""></label>
+                <input id="login-submit" type="submit" value="Đăng nhập" />
+                <a href="">Bạn quên mật khẩu?</a>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/scripts/model/RequestHandler.class.js"></script>
+    <script src="assets/scripts/login.js"></script>
+</body>
+
+</html>

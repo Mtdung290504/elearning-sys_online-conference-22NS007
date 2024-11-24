@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../assets/styles/shared-style.css">
+    <link rel="stylesheet" href="../assets/styles/home-style.css">
+    <link rel="stylesheet" href="../assets/styles/modal-style.css">
+</head>
+<body class="open-modal">
+    <div class="header">
+        <div class="btn">
+            <img src="../assets/images/menu.svg" alt="">
+        </div>
+        <div class="user">
+            <div class="user-name">NGÔ ZERO - GV</div>
+            <div class="avatar">
+                <img src="../assets/images/avt.png" alt="avatar">
+            </div>
+            <div class="hidden-options">
+                <a href="">Cá nhân</a>
+                <a href="">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="side-nav">
+            <a class="link-title">Điều hướng</a>
+            <a href="">Dashboard</a>
+            <!-- <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a> -->
+            <a class="link-title">Các lớp học của tôi</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+            <a href="">Lập trình di động - nhóm 20 (2023 - 2024) - Ngô ZERO</a>
+        </div>
+        <div class="main">
+            <div class="ctn">
+                <h3 class="title">CÁC LỚP HỌC CỦA TÔI</h3>
+                <div class="class-manage-box">
+                    <input type="text" name="find-class" id="find-class" placeholder="Tìm lớp học...">
+                    <a href="">+ Tạo lớp học mới</a>
+                </div>
+                <div class="class-box">
+
+                    <a class="class-link" href="">
+                        <div class="class-img-ctn">
+                            <img class="class-img" src="../assets/images/abstract-black-n-white.jpg" alt="">
+                        </div>
+                        <div class="class-name" author-name="NGÔ ZERO">Lập trình di động - nhóm 20 (2023 - 2024)</div>
+                    </a>                 
+                    <a class="class-link" href="">
+                        <div class="class-img-ctn">
+                            <img class="class-img" src="../assets/images/abstract-black-n-white.jpg" alt="">
+                        </div>
+                        <div class="class-name" author-name="NGÔ ZERO">Xác suất thống kê - nhóm 16 (2023 - 2024)</div>
+                    </a>                 
+                    <a class="class-link" href="">
+                        <div class="class-img-ctn">
+                            <img class="class-img" src="../assets/images/abstract-black-n-white.jpg" alt="">
+                        </div>
+                        <div class="class-name" author-name="NGÔ ZERO">Nguyên lý hệ điều hành - nhóm 10 (2023 - 2024) long text long text long text long text</div>
+                    </a>
+                    <a class="class-link" href="">
+                        <div class="class-img-ctn">
+                            <img class="class-img" src="../assets/images/abstract-black-n-white.jpg" alt="">
+                        </div>
+                        <div class="class-name" author-name="NGÔ ZERO">long text long text long text long text text long text long text long</div>
+                    </a>
+
+                </div>
+            </div>
+            <div class="ctn">
+                <details class="big-ctn">
+                    <summary class="document-category big-category title">KHO TÀI LIỆU</summary>
+                    <div class="class-manage-box">
+                        <input type="text" name="find-document" id="find-document" placeholder="Tìm danh mục...">
+                        <a id="new-doc-category" href="javascript:void(0)">+ Danh mục mới</a>
+                    </div>
+
+                    <details>
+                        <summary class="document-category" data-doc-id="doc000">
+                            <h4>Bộ slide Toán Rời Rạc</h4>
+                            <div class="icon-box">
+                                <div class="icon edit-icon edit-doc-icon" title="Xem và sửa"><i class="fas fa-edit"></i></div>
+                                <div class="icon download-icon" title="download zip"><i class="fa fa-download" aria-hidden="true"></i></div>
+                            </div>
+                        </summary>
+                        <div class="detail">
+                            <input type="text" placeholder="Tìm tài liệu...">
+                            <a data-doc-id="doc000-1" href="">Chuong_1.pptx</a>
+                            <a data-doc-id="doc000-2" href="">Chuong_2.pptx</a>
+                            <a data-doc-id="doc000-3" href="">Chuong_3.pptx</a>
+                            <a data-doc-id="doc000-4" href="">Chuong_4.pptx</a>
+                            <a data-doc-id="doc000-5" href="">Chuong_5.pptx</a>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary class="document-category" data-doc-id="doc001">
+                            <h4>Bộ slide Mạng MT</h4>
+                            <div class="icon-box">
+                                <div class="icon edit-icon edit-doc-icon" title="Xem và sửa"><i class="fas fa-edit"></i></div>
+                                <div class="icon download-icon" title="Tải toàn bộ (.zip)"><i class="fa fa-download" aria-hidden="true"></i></div>
+                            </div>
+                        </summary>
+                        <div class="detail">
+                            <input type="text" placeholder="Tìm tài liệu...">
+                            <a data-doc-id="doc001-1" href="">Chuong_1.pptx</a>
+                            <a data-doc-id="doc001-2" href="">Chuong_2.pptx</a>
+                            <a data-doc-id="doc001-3" href="">Chuong_3.pptx</a>
+                            <a data-doc-id="doc001-4" href="">Chuong_4.pptx</a>
+                            <a data-doc-id="doc001-5" href="">Chuong_5.pptx</a>
+                            <a data-doc-id="doc001-6" href="">Chuong_6.pptx</a>
+                            <a data-doc-id="doc001-7" href="">Chuong_7.pptx</a>
+                            <a data-doc-id="doc001-8" href="">Chuong_8.pptx</a>
+                        </div>
+                    </details>
+
+                </details>
+
+                <details class="big-ctn">
+                    <summary class="document-category big-category title">THƯ VIỆN TRẮC NGHIỆM</summary>
+                    <div class="class-manage-box">
+                        <input type="text" name="find-quest-lib" id="find-quest-lib" placeholder="Tìm danh mục...">
+                        <a id="new-quest-lib-category" href="javascript:void(0)">+ Danh mục mới</a>
+                    </div>
+
+                    <details>
+                        <summary class="document-category" data-quest-lib-id="quest-lib-000">
+                            <h4>Trắc nghiệm chương 1 - Toán rời rạc</h4>
+                            <div class="icon-box">
+                                <div class="icon edit-icon edit-quest-lib-icon" title="Xem và sửa"><i class="fas fa-edit"></i></div>
+                                <div class="icon add-icon add-quest-lib-icon" title="Thêm câu hỏi"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                        </summary>
+                    </details>
+
+                    <details>
+                        <summary class="document-category" data-quest-lib-id="quest-lib-001">
+                            <h4>Bộ slide Mạng MT</h4>
+                            <div class="icon-box">
+                                <div class="icon edit-icon edit-quest-lib-icon" title="Xem và sửa"><i class="fas fa-edit"></i></div>
+                                <div class="icon add-icon add-quest-lib-icon" title="Thêm câu hỏi"><i class="fa-solid fa-plus"></i></div>
+                            </div>
+                        </summary>
+                    </details>
+
+                </details>
+
+                <div class="class-manage-box">
+                    <a style="visibility: hidden;"></a>
+                    <a id="view-message" href="javascript:void(0)">Tin nhắn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer"></div>
+    <div class="modal-container">
+        <div class="modal">
+            <div class="modal-header">CHỈNH SỬA NGÂN HÀNG TRẮC NGHIỆM</div>
+
+            <div class="modal-body">
+                <div class="wrapper edit-quest-lib">
+                    <div class="ctn quest-list">
+                        <h3>DANH SÁCH CÂU HỎI</h3>
+
+                        <div class="quest-ctn">
+                            <!-- LIST OF QUESTIONS HERE -->
+                            <div class="quest new">
+                                <div class="quest-content" data-quest-id="1">
+                                    Quest content Quest content Quest content Quest content Quest content Quest content Quest content Quest content Quest content Quest content Quest content Quest content
+                                    <i title="edit" class="edit-icon fas fa-edit"></i>
+                                </div>
+                                <div class="quest-answers">
+                                    <li class="quest-answer">Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer Quest answer <i title="edit" class="edit-icon fas fa-edit"></i><i title="right-question" class="right-icon fa-solid fa-check"></i></li>
+                                    <li class="quest-answer right">21312<i title="edit" class="edit-icon fas fa-edit"></i><i title="right-question" class="right-icon fa-solid fa-check"></i></li>
+                                    <li class="quest-answer">12312ed<i title="edit" class="edit-icon fas fa-edit"></i><i title="right-question" class="right-icon fa-solid fa-check"></i></li>
+                                    <li class="quest-answer">dsfsdf<i title="edit" class="edit-icon fas fa-edit"></i><i title="right-question" class="right-icon fa-solid fa-check"></i></li>
+                                </div>
+                            </div>
+                            <div class="quest">
+                                <div class="quest-content">Quest content</div>
+                                <div class="quest-answers">
+                                    <li class="quest-answer">122</li>
+                                    <li class="quest-answer">21312</li>
+                                    <li class="quest-answer">12312ed</li>
+                                    <li class="quest-answer">dsfsdf</li>
+                                </div>                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ctn inputs">
+                        <div class="input-box">
+                            <label for="category-name">ĐỔI TÊN NGÂN HÀNG TRẮC NGHIỆM</label>
+                            <div style="display: flex; align-items: center;">
+                                <input required type="text" name="category-name" id="category-name" placeholder="Tên mới...">
+                                <div class="btn">Xác nhận</div>
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <label for="upload-file">THÊM CÂU HỎI</label>
+                            <div style="display: flex; align-items: center;">
+                                <input required type="file" name="upload-file" id="upload-file" accept="">
+                                <div class="btn">Thêm</div>
+                            </div>
+                            <p class="note">
+                                <strong>LƯU Ý</strong>: TẢI LÊN FILE WORD (.dox) CHỨA DANH SÁCH CÁC CÂU HỎI DƯỚI DẠNG LIST 2 LV, ĐÁP ÁN ĐÚNG CẦN BÔI ĐEN, GẠCH CHÂN HOẶC IN NGHIÊNG. VÍ DỤ:
+                                <br><br><span style="padding-left: 15px;">
+                                    1. Nội dung câu hỏi... (list lv1)<br>
+                                    &ensp;&ensp;&ensp;&ensp;A. (list lv2)<br>
+                                    &ensp;&ensp;&ensp;&ensp;B.<br>
+                                    &ensp;&ensp;&ensp;&ensp;C.<br>
+                                    &ensp;&ensp;&ensp;&ensp;D.
+                                </span>
+                                <br><br>HỆ THỐNG SẼ CỐ GẮNG PHÂN TÍCH THÀNH CÁC CÂU HỎI.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="../assets/scripts/Modal-content.class.js"></script> -->
+    <script src="../assets/scripts/shared-actions.js"></script>
+    <script src="../assets/scripts/teacher-homepage.js"></script>
+</body>
+</html>
