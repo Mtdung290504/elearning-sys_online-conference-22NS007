@@ -59,6 +59,7 @@ function onSendMessage() {
 }
 
 function sendMessage(message) {
+    if(!message) return;
     const box = document.createElement('div');
     box.className = 'message outgoing';
     box.textContent = message;
