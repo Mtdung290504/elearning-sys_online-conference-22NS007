@@ -7,7 +7,7 @@
                 <div onclick="joinMeeting(event, '<%= meeting.meeting_code %>')" class="icon view-detail" title="Tham gia"><i class="fa-solid fa-phone"></i></div>
             <% } %>
             <div onclick="editMeeting(event, '<%= meeting.id %>')" class="icon edit" title="Sửa"><i class="fas fa-edit"></i></div>
-            <div onclick="editMeeting(event, '<%= meeting.id %>')" class="icon delete" title="Xóa"><i class="fa fa-trash" aria-hidden="true"></i></div>
+            <div onclick="deleteMeeting(event, '<%= meeting.id %>')" class="icon delete" title="Xóa"><i class="fa fa-trash" aria-hidden="true"></i></div>
         </div>
     </summary>
     <p class="desc" <%- meeting.description ? '' : 'style="display: none;"' %>>

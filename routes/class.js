@@ -84,7 +84,8 @@ router.get('/:id', middleWares.requireClassExistence, middleWares.requireAccessT
 });
 
 router.get('/:id/meet/:meetingCode', (req, res) => {
-    res.json({ classId: req.params.id, mettingCode: req.params.meetingCode});
+    const user = req.session.user;
+    res.json({ classId: req.params.id, mettingCode: req.params.meetingCode, user: JSON.stringify(user) });
 });
 
 export default router;

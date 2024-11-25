@@ -925,12 +925,84 @@ class AddMeeting {
 }
 
 class EditMeeting {
-    constructor() {
-
+    constructor({ id, class_id, name, description, start_time, end_time, meeting_code, status }) {
+        Object.assign(this, { id, class_id, name, description, start_time, end_time, meeting_code, status });
+        console.log(id, class_id, name, description, start_time, end_time, meeting_code, status);
+        this.meetingName = document.querySelector(`#meeting-${id}`).querySelector('summary').textContent;
+        this.title = `Sửa cuộc họp trực tuyến: "${this.meetingName.trim()}"`;
     }
 
     getModalBodyContent() {
+        const wrapper = document.createElement('div');
+        const ctn1 = document.createElement('div');
 
+        wrapper.classList.add('wrapper', 'assign-homework', 'create-meeting');
+        ctn1.classList.add('ctn');
+
+        ctn1.innerHTML = `
+            <h3>THÔNG TIN</h3>
+            <div class="form-box">
+                <div class="input-box">
+                    <form id="add-metting-form">
+                        <div class="form-row">
+                            <label for="mt-name">Tên cuộc họp</label>
+                            <input id="mt-name" type="text" placeholder="Tên cuộc họp" required value="${this.name}">
+                        </div>
+                        <div class="form-row">
+                            <label for="mt-descriptions">Mô tả</label>
+                            <textarea name="" id="mt-descriptions" placeholder="Mô tả">${this.description}</textarea>
+                        </div>
+                        <div class="form-row">
+                            <label for="mt-start-time">Dự kiến bắt đầu vào</label>
+                            <input type="datetime-local" name="" id="mt-start-time" required value="${this.start_time}">
+                        </div>
+                        <div class="form-row">
+                            <label for="mt-end-time">Dự kiến kết thúc vào</label>
+                            <input type="datetime-local" name="" id="mt-end-time" required value="${this.end_time}">
+                        </div>
+                        <div class="form-row">
+                            <input type="reset" value="Tạo lại">
+                            <a id="add-meeting-submit-btn" href="javascript:void(0)" class="btn">Sửa</a>
+                        </div>
+                        <input type="submit" style="display:none;">
+                    </form>
+                </div>                            
+            </div>
+        `;
+        // Send request to server to add meeting
+        const addMeetingForm = ctn1.querySelector('#add-metting-form');
+        addMeetingForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if(!confirm('Xác nhận sửa thông tin?'))
+                return;
+
+            const [name, description, startTime, endTime] = ['name', 'descriptions', 'start-time', 'end-time'].map(selector => {
+                return ctn1.querySelector('#mt-' + selector).value;
+            });
+
+            if(new Date(startTime) > new Date(endTime)) {
+                alert('Thời gian kết thúc cuộc họp phải sau thời gian nó bắt đầu!');
+                return;
+            }
+
+            RequestHandler.sendRequest('ajax/meeting', {
+                meetingId: this.id, name, description, startTime, endTime
+            }, 'PUT').then(({ e, m, d }) => {
+                if(e) {
+                    alert(e); return;
+                }
+                alert(m);
+                document.body.classList.remove('open-modal');
+                const oldNode = document.querySelector(`#meeting-${this.id}`);
+                oldNode.outerHTML = d;
+            }).catch(error => console.log(error));
+        });
+        console.log(ctn1);
+        ctn1.querySelector('a#add-meeting-submit-btn').addEventListener('click', () => {
+            ctn1.querySelector('input[type="submit"]').click();
+        });
+        wrapper.appendChild(ctn1);
+        return wrapper;
     }
 }
 

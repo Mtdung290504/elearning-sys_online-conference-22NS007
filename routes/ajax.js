@@ -108,6 +108,7 @@ const userUploadStorage = multer({ storage: userStorage });
             
         const classId = req.body['classId'];
         const currentStatus = req.body['currentStatus'];
+        console.log('Receive', currentStatus);
 
         if (req.session.role != 1) {
             e = "Bạn không có quyền!";
@@ -118,8 +119,9 @@ const userUploadStorage = multer({ storage: userStorage });
         try {
             const { success, message } = await db.toggleClassInviteStatus(classId, currentStatus);
             if(!success) {
-                m = message;                
+                m = message;
             }
+            console.log(success);
         } catch (error) {
             e = "Internal server error";
             console.error(error);
@@ -608,6 +610,63 @@ const userUploadStorage = multer({ storage: userStorage });
 
             res.json({ e, m, d });
         });
+        // Delete meeting
+        router.delete('/meeting', formUpload.none(), async (req, res) => {
+            let [e, m, d] = Array(3).fill(null);
+
+            if (req.session.role != 1) {
+                e = "Bạn không có quyền!";
+                res.json({ e, m, d });
+                return;
+            }
+
+            const meetingId = req.body['meetingId'];
+
+            try {
+                const success = await db.deleteMeeting(meetingId);
+                if(success) {
+                    m = "Xóa thành công";                    
+                }
+            } catch (error) {
+                e = "Internal server error";
+                console.error(error);
+            }
+        
+            res.json({ e, m, d });
+        });
+        // Update meeting
+        router.put('/meeting', formUpload.none(), async (req, res) => {
+            let [e, m, d] = Array(3).fill(null);
+
+            if (req.session.role != 1) {
+                e = "Bạn không có quyền!";
+                res.json({ e, m, d });
+                return;
+            }
+
+            const meetingId = req.body['meetingId'],
+                    name = req.body['name'],
+                    description = req.body['description'],
+                    startTime = Utils.formatToSqlDatetime(req.body['startTime']),
+                    endTime = Utils.formatToSqlDatetime(req.body['endTime']);
+            
+            try {
+                await db.updateMeeting(meetingId, startTime, endTime, name, description);
+                m = "Sửa thành công";
+                const meeting = await db.getMeetingById(meetingId);
+                meeting.start_time = Utils.formatToDisplayDatetime(meeting.start_time);
+                meeting.end_time = Utils.formatToDisplayDatetime(meeting.end_time);
+                d = await ejs.renderFile(
+                    path.join(__dirname, "views", "class-views", "items", "meeting-lecturer-view.ejs"),
+                    { meeting }
+                );
+            } catch (error) {
+                e = "Internal server error";
+                console.error(error);
+            }
+        
+            res.json({ e, m, d });
+        });
     //Queries
         // Get exercise info for update
         router.get('/exercise/:id', async (req, res) => {
@@ -632,6 +691,30 @@ const userUploadStorage = multer({ storage: userStorage });
                 exercise.start_time = Utils.formatToInputDatetime(exercise.start_time);
                 exercise.end_time = Utils.formatToInputDatetime(exercise.end_time);
                 d = { exerciseId, oldData: exercise, listOfAttachedFileId, listOfDocCategoryAndDoc, rootUrl };
+            } catch (error) {
+                e = "Internal server error";
+                console.error(error);
+            }
+        
+            res.json({ e, m, d });
+        });
+        // Get meeting info for update
+        router.get('/meeting/:id', async (req, res) => {
+            let [e, m, d] = Array(3).fill(null);
+
+            if (req.session.role != 1) {
+                e = "Bạn không có quyền!";
+                res.json({ e, m, d });
+                return;
+            }
+
+            const meetingId = req.params.id;
+
+            try {
+                const meeting = await db.getMeetingById(meetingId);
+                meeting.start_time = Utils.formatToInputDatetime(meeting.start_time);
+                meeting.end_time = Utils.formatToInputDatetime(meeting.end_time);
+                d = { ...meeting };
             } catch (error) {
                 e = "Internal server error";
                 console.error(error);

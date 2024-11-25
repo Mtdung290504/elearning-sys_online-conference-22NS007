@@ -89,6 +89,32 @@ function deleteExercise(event, exerciseId) {
     }).catch(error => console.log(error));
 }
 
+function deleteMeeting(event, meetingId) {
+    event.preventDefault();
+    const meetingBox = event.target.closest('.meeting');
+    meetingId = parseInt(meetingId);
+
+    if (isNaN(meetingId)) {
+        alert('Lỗi tham số');
+        return;
+    }
+    
+    if(!confirm('Xác nhận xóa buổi học này?'))
+        return;
+
+    RequestHandler.sendRequest('ajax/meeting', { meetingId: Number(meetingId) }, 'DELETE')
+    .then(({ e, m, d }) => {
+        if (e) {
+            alert(e);
+            return;
+        }
+        alert(m);
+        const meetingContainer = meetingBox.parentNode;
+        meetingContainer.removeChild(meetingBox);
+        if(meetingContainer.childElementCount == 0) meetingContainer.innerHTML = '<h3 style="margin: 10px">CHƯA CÓ BUỔI HỌC NÀO</h3>';
+    }).catch(error => console.log(error));
+}
+
 function editExercise(event, exerciseId) {
     event.preventDefault();
     exerciseId = parseInt(exerciseId);
@@ -106,6 +132,30 @@ function editExercise(event, exerciseId) {
         }
         // console.log(d);
         new ModalContent("editExercise", d).buildModalContent(modal);
+        document.body.classList.add("open-modal");
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+function editMeeting(event, meetingId) {
+    event.preventDefault();
+    meetingId = parseInt(meetingId);
+
+    if (isNaN(meetingId)) {
+        alert('Lỗi tham số');
+        return;
+    }
+
+    RequestHandler.sendRequest(`ajax/meeting/${meetingId}`, {}, 'GET')
+    .then(({ e, m, d }) => {
+        if (e) {
+            alert(e);
+            return;
+        }console.log(d);
+        new ModalContent("editMeeting", d).buildModalContent(modal);
+        
         document.body.classList.add("open-modal");
     })
     .catch((error) => {

@@ -118,7 +118,8 @@ export default class Database {
     async toggleClassInviteStatus(classId, isOpen) {
         try {
             // Chuyển đổi isOpen thành 0 (false) hoặc 1 (true)
-            const isOpenInt = isOpen ? 1 : 0;
+            const isOpenInt = isOpen === 'true' ? 1 : 0;
+            console.log('Change to', isOpenInt);
     
             // Sử dụng câu lệnh SQL để cập nhật trạng thái cột is_open_students
             const query = `
@@ -523,6 +524,39 @@ export default class Database {
             const queryResult = await this.pool.execute('CALL create_meeting(?, ?, ?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
             console.log('addMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            return queryResult[0][0][0];
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteMeeting(meetingId) {
+        try {
+            const queryResult = await this.pool.execute('CALL delete_meeting(?)', [...arguments]);
+            const [resultSetHeader] = queryResult;
+            console.log('deleteMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateMeeting(meetingId, startTime, endTime, name, description) {
+        try {
+            const queryResult = await this.pool.execute('CALL update_meeting(?, ?, ?, ?, ?)', [...arguments]);
+            const [resultSetHeader] = queryResult;
+            console.log('updateMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getMeetingById(meetingId) {
+        try {
+            const queryResult = await this.pool.execute('CALL get_meeting_by_id(?)', [...arguments]);
+            const [resultSetHeader] = queryResult;
+            console.log('getMeetingById - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return queryResult[0][0][0];
         } catch (error) {
             throw error;

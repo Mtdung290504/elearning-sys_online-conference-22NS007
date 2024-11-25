@@ -56,6 +56,7 @@ DROP PROCEDURE IF EXISTS get_students_submission_status;
 DROP PROCEDURE IF EXISTS get_students_submission_status_with_files;
 DROP PROCEDURE IF EXISTS join_class_with_invite_code;
 DROP PROCEDURE IF EXISTS get_meetings_by_class_id;
+DROP PROCEDURE IF EXISTS get_meeting_by_id;
 DROP PROCEDURE IF EXISTS create_meeting;
 DROP PROCEDURE IF EXISTS update_meeting;
 DROP PROCEDURE IF EXISTS delete_meeting;
@@ -74,6 +75,20 @@ CREATE PROCEDURE get_meetings_by_class_id (
     FROM meetings
     WHERE meetings.class_id = class_id
     ORDER BY start_time ASC;
+END $
+
+-- get_meeting_by_id(meeting_id)
+CREATE PROCEDURE get_meeting_by_id (
+    IN meeting_id INT
+) BEGIN
+    SELECT id, class_id, name, description, start_time, end_time, meeting_code,
+    CASE 
+        WHEN NOW() < start_time THEN 'not-started'
+        WHEN NOW() BETWEEN start_time AND end_time THEN 'started'
+        ELSE 'ended'
+    END AS status
+    FROM meetings
+    WHERE id = meeting_id;
 END $
 
 -- create_meeting(class_id, start_time, end_time, name, description)
