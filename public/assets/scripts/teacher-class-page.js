@@ -225,7 +225,7 @@ function joinMeeting(event, meetingCode) {
     // Tạo URL cho phòng họp
     const meetingUrl = `${baseUrl}meet/${meetingCode}`;
     // Mở URL trong một tab mới
-    window.open(meetingUrl, '_blank');
+    window.location.href = meetingUrl;
 }
 
 document.getElementById('copy-button').addEventListener('click', () => {

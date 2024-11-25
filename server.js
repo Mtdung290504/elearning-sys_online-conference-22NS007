@@ -22,6 +22,8 @@ import Utils from "./utils.js";
 import classRoutes from "./routes/class.js";
 import ajaxRoutes from "./routes/ajax.js";
 
+import { Server } from 'socket.io';
+
 const app = express();
 const formUpload = multer();
 const db = new Database();
@@ -170,6 +172,46 @@ app.use('/ajax', ajaxRoutes);
 // Start HTTPS server
 const port = process.env.PORT || 3000;
 const httpsServer = https.createServer(sslCredentials, app);
+const rooms = {};
+const io = new Server(httpsServer);
+const rtcDebug = false;
+
+io.on('connection', (socket) => {
+    console.log(`User connected: ${socket.id}`);
+
+    // Khi người dùng join một room
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.to(roomId).emit('user-connected', userId);
+        console.log(`User ${userId} joined room ${roomId}`);
+
+        socket.joinedRoom = roomId;
+
+        // Xử lý khi có offer từ peer
+        socket.on('offer', (targetId, offer) => {
+            rtcDebug && console.log('offer to: ', targetId, offer);
+            socket.to(targetId).emit('offer', socket.id, offer);
+        });
+
+        // Xử lý khi có answer từ peer
+        socket.on('answer', (targetId, answer) => {
+            rtcDebug && console.log('answer to: ', targetId, answer);
+            socket.to(targetId).emit('answer', socket.id, answer);
+        });
+
+        // Xử lý khi có ICE candidate từ peer
+        socket.on('candidate', (targetId, candidate) => {
+            rtcDebug && console.log('candidate to: ', targetId, candidate);
+            socket.to(targetId).emit('candidate', socket.id, candidate);
+        });
+
+        // Khi người dùng rời khỏi room
+        socket.on('disconnect', () => {
+            socket.to(roomId).emit('user-disconnected', userId);
+            console.log(`User ${userId} disconnected`);
+        });
+    });
+});
 
 httpsServer.listen(port, () => {
     const serverAddress = getServerWiFiIP();

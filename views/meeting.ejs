@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/styles/meet-style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="app.js" defer></script> -->
+    <script>
+        const userName = '<%= user.name %>';
+        const role = '<%= role %>';
+    </script>
+</head>
+
+<body>
+    <div class="popup-message" id="popup">
+        <div class="title">Thông báo</div>
+        <div class="message" id="popup-message">Nội dung thông báo.</div>
+        <button class="close-btn" id="popup-close-btn">Đóng</button>
+    </div>
+    
+    <div id="chat-panel" class="">
+        <div id="chat-header">
+            <h3>Chat</h3>
+            <button id="chat-panel-close"></button>
+        </div>
+
+        <div id="chat-content">
+            <!-- Nội dung chat ở đây -->
+            <div class="message incoming" sender="Assistant">
+                Hi there! How can I help you?
+            </div>
+            <div class="message outgoing">
+                I'm exploring some UI designs!
+            </div>
+            <div class="message incoming" sender="Assistant">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique porro delectus quos, voluptates dolores adipisci amet. Placeat quas molestiae beatae necessitatibus excepturi aliquam aperiam minus, praesentium labore neque voluptates expedita!
+            </div>
+        </div>
+
+        <div id="chat-input">
+            <form method="get" id="chat-form" autocomplete="off">
+                <input type="text" id="chat-text" placeholder="Type a message..." />                
+            </form>
+            <button id="chat-send"></button>
+        </div>
+
+    </div>       
+    
+    <div id="video-grid-wrapper">
+        <div id="video-grid" class="">
+            <div class="video-wrapper on-voice">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <div class="video-wrapper">
+                <video src=""></video>
+            </div>
+            <!-- Các video khác... -->
+        </div>        
+    </div>
+
+    <div id="controls">
+        <button id="toggle-mic-button" class="control-button active"></button>
+        <button id="toggle-cam-button" class="control-button active"></button>
+        <button id="toggle-share-screen-button" class="control-button"></button>
+        <button id="toggle-rise-hand-button" class="control-button"></button>
+        <button id="leave-button" class="control-button"></button>
+        <button id="toggle-chat-button" class="control-button"></button>
+        <button id="toggle-attendees-button" class="control-button"></button>
+    </div>
+
+    <script src="/assets/scripts/meeting/script.js"></script>
+    <script src="/assets/scripts/meeting/actions.js"></script>
+</body>
+
+</html>

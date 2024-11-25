@@ -1,0 +1,490 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #222;
+    height: 100dvh;
+    padding: 10px 10%;
+    overflow: hidden;
+    transition: padding .3s;
+    font-family: 'Roboto', sans-serif;
+}
+
+.debug {
+    border: 1.5px solid deepskyblue;
+}
+
+#video-grid-wrapper {
+    height: 100%;
+    overflow-y: auto;
+    transition: margin .3s;
+    padding: 2px;
+    scroll-snap-type: y mandatory;
+}
+
+#video-grid {
+    position: relative;
+    display: grid;
+    column-gap: .7em;
+    row-gap: .5em;
+    width: 100%;
+    height: fit-content;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: min-content;
+    padding: 5px;
+}
+
+::-webkit-scrollbar {
+    width: .6em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.video-wrapper {
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    box-shadow: 2px 2px 4px black;
+    background-color: black;
+    grid-column: auto;
+}
+
+.video-wrapper.rise-hand::before {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    width: 18%;
+    aspect-ratio: 1;
+    background-image: url('/assets/icons/front_hand.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform-origin: center;
+    background-color: rgba(0, 64, 255, 0.85);
+    border-radius: 50%;
+}
+
+.video-wrapper.on-voice {
+    animation: pulse .75s ease-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        border: 2px groove transparent;
+        box-shadow: 0 0 2px transparent;
+    }
+    50% {
+        border: 2px groove #1a73e8;
+        box-shadow: 0 0 3px #1a73e8;
+    }
+    100% {
+        border: 2px groove transparent;
+        box-shadow: 0 0 2px transparent;
+    }
+}
+
+.video-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4px;
+    height: 2em;
+    width: 0;
+    border-left: 8px solid white;
+}
+
+.video-wrapper.pin {
+    grid-column: 1 / -1;
+    border: 1px solid white;
+    padding: 1em;
+    z-index: 10;
+    background-color: #333;
+    box-shadow: 2px 2px 4px black;
+    margin-bottom: .7em;
+}
+
+.video-wrapper > video {
+    display: block;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#controls {
+    position: fixed;
+    z-index: 100;
+    bottom: 1em;
+    right: 50%;
+    translate: 50% 0;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    width: 50%;
+    background-color: #333;
+    /* border-radius: 5px; */
+    padding: .5em;
+    /* box-shadow: 0px 0px 3px snow; */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid white;
+}
+
+.control-button {
+    position: relative;
+    display: inline-block;
+    height: 3em;
+    aspect-ratio: 1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #555;
+    position: relative;
+    display: grid;
+    place-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+}
+.control-button.active {
+    background-color: #222;
+    box-shadow: none;
+    /* box-shadow: -1px -1px 5px rgba(0, 0, 0, 0.7); */
+}
+
+.control-button::after {
+    content: "";
+    width: 65%;
+    aspect-ratio: 1;
+    background-size: cover; /* Đảm bảo ảnh nền phủ kín */
+    background-position: center;
+    display: block;
+}
+
+.control-button::before {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: rgba(0, 0, 0, .3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: .3s;
+    opacity: 0;
+    border-radius: 5px;
+}
+
+.control-button:active::before {
+    opacity: 1;
+}
+
+.control-button:active {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+}
+
+#leave-button {
+    background-color: red;
+}
+
+#leave-button::after {
+    background-image: url('/assets/icons/end_call.png');
+}
+
+#toggle-mic-button::after {
+    background-image: url('/assets/icons/mic.png');
+}
+#toggle-mic-button.active::after {
+    background-image: url('/assets/icons/mic_off.png');
+}
+
+#toggle-cam-button.control-button.blocked {
+    cursor: not-allowed;
+    background-color: #111;
+}
+#toggle-cam-button::after {
+    background-image: url('/assets/icons/cam.png');
+}
+#toggle-cam-button.active::after {
+    background-image: url('/assets/icons/cam_off.png');
+}
+
+#toggle-share-screen-button::after {
+    background-image: url('/assets/icons/screen_share.png');
+}
+#toggle-share-screen-button.active::after {
+    background-image: url('/assets/icons/stop_screen_share.png');
+}
+
+#toggle-rise-hand-button::after {
+    background-image: url('/assets/icons/front_hand.png');
+}
+#toggle-rise-hand-button.active::after {
+    background-image: url('/assets/icons/back_hand.png');
+}
+
+#toggle-chat-button::after {
+    background-image: url('/assets/icons/chat.png');
+}
+
+#toggle-attendees-button::after {
+    background-image: url('/assets/icons/attendees.png');
+}
+
+
+/* Chat nav */
+body:has(#chat-panel.open) > #video-grid-wrapper > #video-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body:has(#chat-panel.open) > #video-grid-wrapper {
+    margin-right: 300px;
+}
+
+#chat-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 25vw;
+    height: 95vh;
+    background-color: #202124;
+    color: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 110;
+    border-radius: 10px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#chat-panel.open {
+    transform: translateX(0);
+    margin: 2.5vh 1vw;
+}
+
+#chat-header {
+    position: relative;
+    background-color: #333;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #444;
+}
+
+#chat-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+/* Nội dung chat */
+#chat-content {
+    flex: 1;
+    padding: 1em;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.message {
+    max-width: 80%;
+    margin-bottom: 1em;
+    padding: 0.8em;
+    border-radius: 10px;
+    font-size: 0.8em;
+    line-height: 1.4;
+}
+
+.message.incoming {
+    /* background-color: #444; */
+    color: #eee;
+    align-self: flex-start;
+    border-radius: 0;
+    border-left: 3px solid white;
+
+}
+.message::before {
+    content: attr(sender);
+    text-transform: capitalize;
+    font-weight: bold;
+    display: block;
+    margin-bottom: .3em;
+}
+
+.message.outgoing {
+    background-color: #444;
+    color: white;
+    align-self: flex-end;
+}
+
+/* Khu vực nhập chat */
+#chat-input {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    border-top: 1px solid #444;
+    background-color: #333;
+}
+
+#chat-text {
+    padding: 0.8em 1em;
+    font-size: 1em;
+    border: none;
+    border-radius: 20px;
+    background-color: #444;
+    color: white;
+    outline: none;
+    width: 100%;
+    font-size: .9em;
+}
+
+#chat-text::placeholder {
+    color: #aaa;
+}
+
+#chat-form {
+    flex: 1;
+}
+
+/* Nút gửi tin nhắn */
+#chat-send {
+    margin-left: 0.5em;
+    background-color: #1a73e8;
+    border: none;
+    aspect-ratio: 1;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Chèn biểu tượng qua ::before */
+#chat-send::after {
+    content: '';
+    display: block;
+    aspect-ratio: 1;
+    height: 100%;
+    background-image: url('/assets/icons/send.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform-origin: center;
+    transform: scale(.75) translateX(.2em);
+}
+
+/* Hiệu ứng hover */
+#chat-send:hover {
+    background-color: #357ae8;
+}
+
+/* Hiệu ứng nhấn nút */
+#chat-send:active {
+    transform: scale(0.9); /* Nhấn nút sẽ thu nhỏ nhẹ */
+    background-color: #2858c8; /* Màu tối hơn */
+}
+
+/* Nút đóng */
+#chat-panel-close {
+    /* position: absolute;
+    top: 1em;
+    right: 1em; */
+    background: none;
+    border: none;
+    cursor: pointer;
+    aspect-ratio: 1;
+    height: 100%;
+    background-image: url('/assets/icons/close.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Popup */
+/* Popup container */
+.popup-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e1e1e;
+    color: #f5f5f5;
+    padding: 1rem 2.4rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    max-width: 90vw;
+    width: 24rem;
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Title */
+.popup-message .title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    color: #00bcd4;
+}
+
+/* Message */
+.popup-message > .message#popup-message {
+    font-size: .85rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Close button */
+.popup-message .close-btn {
+    display: inline-block;
+    background: #00bcd4;
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+}
+
+.popup-message .close-btn:hover {
+    background: #0097a7;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

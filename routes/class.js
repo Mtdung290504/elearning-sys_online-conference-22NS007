@@ -3,6 +3,8 @@ import middleWares from './middle-wares.js';
 import Database from '../model/database/database.js';
 import Utils from '../utils.js';
 
+import path from 'path';
+
 const router = express.Router();
 const db = new Database();
 
@@ -85,7 +87,9 @@ router.get('/:id', middleWares.requireClassExistence, middleWares.requireAccessT
 
 router.get('/:id/meet/:meetingCode', (req, res) => {
     const user = req.session.user;
-    res.json({ classId: req.params.id, mettingCode: req.params.meetingCode, user: JSON.stringify(user) });
+    const role = req.session.role;
+    // res.json({ classId: req.params.id, mettingCode: req.params.meetingCode, user: JSON.stringify(user) });
+    res.render(path.join(__dirname, 'views', 'meeting.ejs'), { user, role });
 });
 
 export default router;
