@@ -306,7 +306,7 @@ class ManageStudent {
     constructor(listOfStudent) {
         this.listOfStudent = listOfStudent;
         this.className = document.querySelector('h2.class-name').textContent;
-        this.title = `Quản lý sinh viên lớp ${this.className}`;
+        this.title = `Quản lý học viên lớp ${this.className}`;
     }
 
     getModalBodyContent() {
@@ -344,13 +344,13 @@ class ManageStudent {
         });
 
         ctn2.innerHTML = `<div class="input-box">
-            <label for="upload-file">THÊM SINH VIÊN</label>
+            <label for="upload-file">THÊM HỌC VIÊN</label>
             <div style="display: flex; align-items: center;">
                 <input required type="file" name="upload-file" id="upload-file" accept=".xlsx">
                 <div class="btn">Thêm</div>
             </div>
             <p class="note">
-                <strong>LƯU Ý</strong>: TẢI LÊN FILE EXCEL (.xlsx) CHỨA DANH SÁCH SINH VIÊN, HỆ THỐNG SẼ LẤY CỘT ĐẦU TIÊN LÀM ĐỊNH DANH, CỘT THỨ 2 LÀ HỌ TÊN SINH VIÊN.<br><br>LƯU Ý, ĐỊNH DANH KHÔNG ĐƯỢC TRÙNG, NẾU TRÙNG SẼ BỊ LỌC
+                <strong>LƯU Ý</strong>: TẢI LÊN FILE EXCEL (.xlsx) CHỨA DANH SÁCH HỌC VIÊN, HỆ THỐNG SẼ LẤY CỘT ĐẦU TIÊN LÀM ĐỊNH DANH, CỘT THỨ 2 LÀ HỌ TÊN HỌC VIÊN.<br><br>LƯU Ý, ĐỊNH DANH KHÔNG ĐƯỢC TRÙNG, NẾU TRÙNG SẼ BỊ LỌC
             </p>
         </div>`;
         const inputFile = ctn2.querySelector('input');
@@ -377,7 +377,7 @@ class ManageStudent {
                 const contentDisposition = response.headers.get('Content-Disposition');
                 console.log('contentDisposition: ', contentDisposition);
                 const match = contentDisposition.match(/filename="(.+)"/);
-                let fileName = 'Danh sách sinh viên.xlsx'; // Tên mặc định nếu không tìm thấy
+                let fileName = 'Danh sách học viên.xlsx'; // Tên mặc định nếu không tìm thấy
                 if (match && match[1]) {
                     fileName = decodeURIComponent(match[1]); // Giải mã tên tệp
                 }

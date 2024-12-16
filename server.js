@@ -172,7 +172,6 @@ app.use('/ajax', ajaxRoutes);
 // Start HTTPS server
 const port = process.env.PORT || 3000;
 const httpsServer = https.createServer(sslCredentials, app);
-const rooms = {};
 const io = new Server(httpsServer);
 const rtcDebug = false;
 

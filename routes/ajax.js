@@ -359,7 +359,7 @@ const userUploadStorage = multer({ storage: userStorage });
                     note: ''
                 };
                 const promise = db.signUpAndAddStudentToClass(student.name, student.id, student.password, classId).catch(error => {
-                    const errorMessages = ['Sinh viên đã có mặt trong lớp', 'Sinh viên đã có tài khoản từ trước'];
+                    const errorMessages = ['Học viên đã có mặt trong lớp', 'Học viên đã có tài khoản từ trước'];
                     const errorCode = errorMessages.indexOf(error.message);
                     if (errorCode === 0 || errorCode === 1) {
                         student.password = '';
@@ -379,7 +379,7 @@ const userUploadStorage = multer({ storage: userStorage });
 
                 // Tạo file Excel mới
                 const newFilePath = __dirname + `/public/uploads/${user.id}/${Date.now()} - students_with_passwords.xlsx`;
-                const buffer = xlsx.build([{name: "Sinh viên", data: [["Mã sinh viên", "Tên sinh viên", "Mật khẩu", "Ghi chú"]].concat(studentsWithPasswords.map(student => Object.values(student)))}]);
+                const buffer = xlsx.build([{name: "Học viên", data: [["Định danh", "Tên học viên", "Mật khẩu", "Ghi chú"]].concat(studentsWithPasswords.map(student => Object.values(student)))}]);
                 
                 // Ghi dữ liệu vào file Excel mới
                 fs.writeFileSync(newFilePath, buffer);
@@ -775,12 +775,12 @@ const userUploadStorage = multer({ storage: userStorage });
                 console.log(class_name, name, listOfStudentAndFiles, user.id);
 
                 // Tạo thư mục tạm thời
-                const tempDirectory = __dirname + `/public/uploads/${user.id}/Bài nộp sinh viên - Bài tập ${Utils.formatFileName(name)} - Lớp ${Utils.formatFileName(class_name)} (${Utils.formatFileName(Utils.formatToDisplayDatetime(new Date()))})`;
+                const tempDirectory = __dirname + `/public/uploads/${user.id}/Bài nộp học viên - Bài tập ${Utils.formatFileName(name)} - Lớp ${Utils.formatFileName(class_name)} (${Utils.formatFileName(Utils.formatToDisplayDatetime(new Date()))})`;
                 if (!fs.existsSync(tempDirectory)) {
                     fs.mkdirSync(tempDirectory, { recursive: true });
                 }
         
-                // Tạo thư mục cho từng sinh viên và sao chép các file vào thư mục đó
+                // Tạo thư mục cho từng học viên và sao chép các file vào thư mục đó
                 listOfStudentAndFiles.forEach((student) => {
                     let studentDirectoryName = `${tempDirectory}/${student.login_id}`;
 
@@ -807,7 +807,7 @@ const userUploadStorage = multer({ storage: userStorage });
                     }
                 });
         
-                // Nén các thư mục sinh viên thành file zip
+                // Nén các thư mục học viên thành file zip
                 const output = fs.createWriteStream(`${tempDirectory}.zip`);
                 const archive = archiver('zip', { zlib: { level: 9 } });
         
