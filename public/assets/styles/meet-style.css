@@ -36,9 +36,9 @@ body {
     row-gap: .5em;
     width: 100%;
     height: fit-content;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     grid-template-rows: min-content;
-    padding: 5px;
+    padding: 0 30%;
 }
 
 ::-webkit-scrollbar {
@@ -251,7 +251,7 @@ body {
 
 /* Chat nav */
 body:has(#chat-panel.open) > #video-grid-wrapper > #video-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 body:has(#chat-panel.open) > #video-grid-wrapper {
@@ -504,7 +504,8 @@ body:has(#chat-panel.open) > #video-grid-wrapper {
 
     /* Giảm số lượng cột trong lưới video khi màn hình nhỏ */
     #video-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 cột thay vì 4 */
+        /* grid-template-columns: repeat(2, 1fr); */
+        padding: 0 4px !important;
         row-gap: .3em;
         column-gap: .3em;
     }
@@ -517,7 +518,8 @@ body:has(#chat-panel.open) > #video-grid-wrapper {
 
     /* Khi bật chế độ chat, thu hẹp video lưới */
     body:has(#chat-panel.open) > #video-grid-wrapper > #video-grid {
-        grid-template-columns: repeat(2, 1fr); /* Chỉ hiển thị 1 cột video */
+        /* grid-template-columns: repeat(2, 1fr); */
+        padding: 0 4px !important;
     }
 
     /* Điều chỉnh thanh công cụ */

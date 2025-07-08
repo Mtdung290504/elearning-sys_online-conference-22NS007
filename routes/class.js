@@ -43,7 +43,9 @@ router.get('/:id', middleWares.requireClassExistence, middleWares.requireAccessT
         const exercises = await Promise.all(promises); // Đợi cho tất cả các promise hoàn thành và lấy kết quả
         const validExercises = exercises.filter(exercise => exercise !== null); // Lọc
         validExercises.sort((a, b) => a.id - b.id); // Xếp
-        console.log(exercises, validExercises);
+
+        console.log('Debug class page:', exercises, validExercises);
+
         validExercises.forEach(exercise => {
             exercise.start_time = Utils.formatToDisplayDatetime(exercise.start_time);
             exercise.end_time = Utils.formatToDisplayDatetime(exercise.end_time);

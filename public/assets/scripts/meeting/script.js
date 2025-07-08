@@ -326,10 +326,10 @@ shareScreenBtn.addEventListener('click', async () => {
 
             // Gửi thông báo chia sẻ màn hình qua DataChannel
             broadcastData({ type: 'SCREEN_SHARING_STARTED' });
+            shareScreenBtn.classList.add('active');
         } catch (err) {
             console.error('Không thể chia sẻ màn hình:', err);
         }
-        shareScreenBtn.classList.add('active');
         toggleCamButton.disabled = true;
     } else {
         stopScreenSharing();  // Dừng chia sẻ màn hình nếu đang chia sẻ

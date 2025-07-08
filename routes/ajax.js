@@ -11,14 +11,16 @@ import { Document } from '../model/classes.js';
 import xlsx from 'node-xlsx';
 import archiver from 'archiver';
 
+import { PROJECT_ROOT } from '../utils.js';
+
 const router = express.Router();
 const formUpload = multer();
 const db = new Database();
 
 const userStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (req, _file, cb) => {
         const userId = req.session.user.id;
-        const userUploadsDir = path.join(__dirname, 'public', 'uploads', userId.toString()); 
+        const userUploadsDir = path.join(PROJECT_ROOT, 'public', 'uploads', userId.toString()); 
 
         if (!fs.existsSync(userUploadsDir)) {
             fs.mkdirSync(userUploadsDir, { recursive: true });
@@ -26,7 +28,7 @@ const userStorage = multer.diskStorage({
 
         cb(null, userUploadsDir);
     },
-    filename: (req, file, cb) => {
+    filename: (_req, file, cb) => {
         file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
         cb(null, Date.now() + '-' + file.originalname);
     },
@@ -56,7 +58,7 @@ const userUploadStorage = multer({ storage: userStorage });
             const cls = await db.createClass(user.id, className);
             const navItem = `<a href="${rootUrl}/class/${cls.id}">${cls.name}</a>`;
             const gridItem = await ejs.renderFile(
-                path.join(__dirname, "views", "common", "class_grid_item.ejs"),
+                path.join(PROJECT_ROOT, "views", "common", "class_grid_item.ejs"),
                 { rootUrl, cls, user, role: roles[req.session.role] }
             );
             m = "Tạo lớp thành công!";
@@ -88,7 +90,7 @@ const userUploadStorage = multer({ storage: userStorage });
         try {
             const { id, name } = await db.createDocCategory(user.id, docCategoryName);
             const docCategoryItem = await ejs.renderFile(
-                path.join(__dirname, "views", "home-views", "items", "doc_category.ejs"),
+                path.join(PROJECT_ROOT, "views", "home-views", "items", "doc_category.ejs"),
                 { categoryId: id, categoryName: name, listOfDocument: [] }
             );
             m = "Tạo danh mục tài liệu thành công!";
@@ -226,7 +228,7 @@ const userUploadStorage = multer({ storage: userStorage });
             const listOfDocument = await db.getAllDocByCategory(docCategoryId);
             for (const { file_name } of listOfDocument) {
                 const filePathWithSessionUid = `${user.id}/${file_name.substring(file_name.indexOf('/') + 1)}`;
-                const filePath = path.join(__dirname, 'public', 'uploads', filePathWithSessionUid);
+                const filePath = path.join(PROJECT_ROOT, 'public', 'uploads', filePathWithSessionUid);
                 if (fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
                 } else {
@@ -252,7 +254,7 @@ const userUploadStorage = multer({ storage: userStorage });
     
         try {
             const filePathWithSessionUid = `${user.id}/${fileName}`;
-            const filePath = path.join(__dirname, 'public', 'uploads', filePathWithSessionUid);
+            const filePath = path.join(PROJECT_ROOT, 'public', 'uploads', filePathWithSessionUid);
             // console.log(filePath);
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath);
@@ -378,7 +380,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 await Promise.all(promises);
 
                 // Tạo file Excel mới
-                const newFilePath = __dirname + `/public/uploads/${user.id}/${Date.now()} - students_with_passwords.xlsx`;
+                const newFilePath = PROJECT_ROOT + `/public/uploads/${user.id}/${Date.now()} - students_with_passwords.xlsx`;
                 const buffer = xlsx.build([{name: "Học viên", data: [["Định danh", "Tên học viên", "Mật khẩu", "Ghi chú"]].concat(studentsWithPasswords.map(student => Object.values(student)))}]);
                 
                 // Ghi dữ liệu vào file Excel mới
@@ -401,19 +403,7 @@ const userUploadStorage = multer({ storage: userStorage });
             }
         });
         // Delete student *incomplete
-        router.delete('/student-from-class', formUpload.none(), async (req, res) => {
-            // let [e, m, d] = Array(3).fill(null);
-            // const studentId = req.body[""]
-        
-            // try {
-            //     m = "Đổi tên thành công";
-            // } catch (error) {
-            //     e = "Internal server error";
-            //     console.error(error);
-            // }
-        
-            // res.json({ e, m, d });
-        });
+        router.delete('/student-from-class', async (req, res) => {});
         // **Fixed class id
         // Create exercise
         router.post('/exercise', formUpload.none(), async (req, res) => {
@@ -448,7 +438,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 exercise.start_time = Utils.formatToDisplayDatetime(exercise.start_time);
                 exercise.end_time = Utils.formatToDisplayDatetime(exercise.end_time);
                 d = await ejs.renderFile(
-                    path.join(__dirname, "views", "class-views", "items", "exercise-lecturer-view.ejs"),
+                    path.join(PROJECT_ROOT, "views", "class-views", "items", "exercise-lecturer-view.ejs"),
                     { rootUrl, members: member_count, exercise }
                 );
             } catch (error) {
@@ -494,7 +484,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 exercise.start_time = Utils.formatToDisplayDatetime(exercise.start_time);
                 exercise.end_time = Utils.formatToDisplayDatetime(exercise.end_time);
                 d = await ejs.renderFile(
-                    path.join(__dirname, "views", "class-views", "items", "exercise-lecturer-view.ejs"),
+                    path.join(PROJECT_ROOT, "views", "class-views", "items", "exercise-lecturer-view.ejs"),
                     { rootUrl, members: member_count, exercise }
                 );
             } catch (error) {
@@ -519,7 +509,7 @@ const userUploadStorage = multer({ storage: userStorage });
             try {
                 const submittedExerciseFiles = await db.getAllSubmittedExerciseFiles(exerciseId);
                 const deletePromises = submittedExerciseFiles.map(({ file_name }) => {
-                    const filePath = path.join(__dirname, 'public', 'uploads', file_name);
+                    const filePath = path.join(PROJECT_ROOT, 'public', 'uploads', file_name);
         
                     // Trả về một promise để xóa file
                     return new Promise((resolve, reject) => {
@@ -600,7 +590,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 meeting.end_time = Utils.formatToDisplayDatetime(meeting.end_time);
                 m = "Thêm thành công";
                 d = await ejs.renderFile(
-                    path.join(__dirname, "views", "class-views", "items", "meeting-lecturer-view.ejs"),
+                    path.join(PROJECT_ROOT, "views", "class-views", "items", "meeting-lecturer-view.ejs"),
                     { meeting }
                 );
             } catch (error) {
@@ -657,7 +647,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 meeting.start_time = Utils.formatToDisplayDatetime(meeting.start_time);
                 meeting.end_time = Utils.formatToDisplayDatetime(meeting.end_time);
                 d = await ejs.renderFile(
-                    path.join(__dirname, "views", "class-views", "items", "meeting-lecturer-view.ejs"),
+                    path.join(PROJECT_ROOT, "views", "class-views", "items", "meeting-lecturer-view.ejs"),
                     { meeting }
                 );
             } catch (error) {
@@ -756,6 +746,8 @@ const userUploadStorage = multer({ storage: userStorage });
                 res.json({ e, m, d });
                 return;
             }
+
+            console.log('Debug download exercise -----------------------------------------------------------------------\n');
         
             const user = req.session.user;
             const classId = req.params.classId;
@@ -772,14 +764,14 @@ const userUploadStorage = multer({ storage: userStorage });
                     return;
                 }
 
-                console.log(class_name, name, listOfStudentAndFiles, user.id);
-
                 // Tạo thư mục tạm thời
-                const tempDirectory = __dirname + `/public/uploads/${user.id}/Bài nộp học viên - Bài tập ${Utils.formatFileName(name)} - Lớp ${Utils.formatFileName(class_name)} (${Utils.formatFileName(Utils.formatToDisplayDatetime(new Date()))})`;
+                const tempDirectory = path.join(PROJECT_ROOT, `/public/uploads/${user.id}/Bài nộp học viên - Bài tập ${Utils.formatFileName(name)} - Lớp ${Utils.formatFileName(class_name)} (${Utils.formatFileName(Utils.formatToDisplayDatetime(new Date()))})`);
+                console.log('tempDirectory: ', tempDirectory);
                 if (!fs.existsSync(tempDirectory)) {
-                    fs.mkdirSync(tempDirectory, { recursive: true });
+                    console.log('tempDirectory is not exist, create:', fs.mkdirSync(tempDirectory, { recursive: true }));
+                    console.log('Created tempDirectory');
                 }
-        
+
                 // Tạo thư mục cho từng học viên và sao chép các file vào thư mục đó
                 listOfStudentAndFiles.forEach((student) => {
                     let studentDirectoryName = `${tempDirectory}/${student.login_id}`;
@@ -789,14 +781,15 @@ const userUploadStorage = multer({ storage: userStorage });
                     }
 
                     if (!fs.existsSync(studentDirectoryName)) {
-                        fs.mkdirSync(studentDirectoryName, { recursive: true });
+                        console.log('Creating student directory:', fs.mkdirSync(studentDirectoryName, { recursive: true }));
+                        console.log('Created directory for student', student.login_id);
                     }
 
                     if (student.submitted_files) {
                         const submittedFiles = student.submitted_files.split(',');
                         submittedFiles.forEach((filePath) => {
                             if (!filePath) return;
-                            filePath = __dirname + `/public/uploads/${filePath}`;
+                            filePath = PROJECT_ROOT + `/public/uploads/${filePath}`;
 
                             if (fs.existsSync(filePath)) {
                                 const fileName = filePath.split('/').pop();
@@ -806,7 +799,9 @@ const userUploadStorage = multer({ storage: userStorage });
                         return;
                     }
                 });
-        
+
+                console.log('Debug download exercise end -----------------------------------------------------------------------\n');
+
                 // Nén các thư mục học viên thành file zip
                 const output = fs.createWriteStream(`${tempDirectory}.zip`);
                 const archive = archiver('zip', { zlib: { level: 9 } });
@@ -897,7 +892,7 @@ const userUploadStorage = multer({ storage: userStorage });
         
             try {
                 const filePathWithSessionUid = `${user.id}/${fileName}`;
-                const filePath = path.join(__dirname, 'public', 'uploads', filePathWithSessionUid);
+                const filePath = path.join(PROJECT_ROOT, 'public', 'uploads', filePathWithSessionUid);
                 // console.log(filePath);
                 if (fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
@@ -924,7 +919,7 @@ const userUploadStorage = multer({ storage: userStorage });
                 const listOfSubmittedFiles = await db.getSubmittedExerciseFiles(exerciseId, user.id);
                 for (const { file_name } of listOfSubmittedFiles) {
                     const filePathWithSessionUid = `${user.id}/${file_name.substring(file_name.indexOf('/') + 1)}`;
-                    const filePath = path.join(__dirname, 'public', 'uploads', filePathWithSessionUid);
+                    const filePath = path.join(PROJECT_ROOT, 'public', 'uploads', filePathWithSessionUid);
                     if (fs.existsSync(filePath)) {
                         fs.unlinkSync(filePath);
                     } else {

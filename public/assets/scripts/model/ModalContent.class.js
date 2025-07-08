@@ -832,7 +832,7 @@ class ViewSubmissionStatus {
         </div>
         <br>
         <div class="input-box" style="display: flex; justify-content: center;">
-            <a href="" class="btn">Tải xuống toàn bộ bài đã nộp</a>
+            <a class="btn">Tải xuống toàn bộ bài đã nộp</a>
         </div>`;
         const downloadBtn = ctn2.querySelector('.btn');
         downloadBtn.addEventListener('click', () => {

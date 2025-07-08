@@ -5,7 +5,7 @@ import { Account, Student, Lecturer } from '../classes.js';
 const saltRounds = 10;
 
 export default class Database {
-    constructor() {
+    constructor(debug) {
         this.pool = mysql.createPool({
             host: 'localhost',
             user: 'root',
@@ -15,13 +15,15 @@ export default class Database {
             connectionLimit: 10,
             queueLimit: 0
         });
+
+        this.debug = debug;
     }
 
     async lecturerSignUp(isLecturer, { userName, userLoginName, userPassword }) {
         try {
             userPassword = await bcrypt.hash(userPassword, saltRounds);
             const [resultSetHeader] = await this.pool.execute('CALL SIGNUP(?, ?, ?, ?, @student_id)', [isLecturer, userName, userLoginName, userPassword]);
-            console.log('lecturerSignUp - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('lecturerSignUp - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
 
             return resultSetHeader.affectedRows == 1 ? true : false;
         } catch (error) {
@@ -35,7 +37,7 @@ export default class Database {
     async loginUser({ loginId, enteredPassword }) {
         try {
             const queryResult = await this.pool.query('CALL LOGIN(?)', [loginId]);
-            console.log('loginUser - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('loginUser - QueryResult:', queryResult, '-----------------------------\n');
             const resultSet = queryResult[0][0];
             
             if(resultSet.length == 0)
@@ -62,7 +64,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL create_class(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('createClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('createClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             const { id, name } = queryResult[0][0][0];
 
             return { id, name };
@@ -75,7 +77,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL update_class_name(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('updateClassName - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('updateClassName - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -87,7 +89,7 @@ export default class Database {
             const procedureCall = `CALL ${(role == 1) ? 'get_all_lecturer_classes' : 'get_all_student_classes'} (?)`;
             const queryResult = await this.pool.query(procedureCall, [userId]);
 
-            console.log('getAllClass - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAllClass - QueryResult:', queryResult, '-----------------------------\n');
             return queryResult[0][0];
         } catch (error) {
             throw error;
@@ -101,7 +103,7 @@ export default class Database {
     
             // Lấy giá trị từ biến OUT
             const [[{ class_id, success }]] = await this.pool.query('SELECT @class_id AS class_id, @success AS success');
-            console.log('Debug: ------------------------------------------->', class_id, success);
+            this.debug && console.log('Debug: ------------------------------------------->', class_id, success);
     
             // Kiểm tra kết quả trả về
             if (class_id === null || success === null) {
@@ -119,7 +121,7 @@ export default class Database {
         try {
             // Chuyển đổi isOpen thành 0 (false) hoặc 1 (true)
             const isOpenInt = isOpen === 'true' ? 1 : 0;
-            console.log('Change to', isOpenInt);
+            this.debug && console.log('Change to', isOpenInt);
     
             // Sử dụng câu lệnh SQL để cập nhật trạng thái cột is_open_students
             const query = `
@@ -146,7 +148,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL create_doc_category(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('createDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('createDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             const { id, name } = queryResult[0][0][0];
 
             return { id, name };
@@ -158,7 +160,7 @@ export default class Database {
     async getAllDocCategoryAndDoc(lecturerId) {
         try {
             const queryResult = await this.pool.query('CALL get_all_doc_category_n_doc(?)', [lecturerId]);
-            console.log('getAllDocCategoryAndDoc - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAllDocCategoryAndDoc - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0];
         } catch (error) {
@@ -169,7 +171,7 @@ export default class Database {
     async getAllDocByCategory(categoryId) {
         try {
             const queryResult = await this.pool.query('CALL get_all_doc_by_doc_category_id(?)', [categoryId]);
-            console.log('getAllDocByCategory - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAllDocByCategory - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0];
         } catch (error) {
@@ -181,7 +183,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL create_doc_n_add_to_doc_category(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('createDocAndAddToDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('createDocAndAddToDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             const { id, file_name } = queryResult[0][0][0];
 
             return { id, file_name };
@@ -194,7 +196,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL update_doc_category_name(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('changeNameOfDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('changeNameOfDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -205,7 +207,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL delete_doc_category(?)', [docCategoryId]);
             const [resultSetHeader] = queryResult;
-            console.log('deleteDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('deleteDocCategory - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -216,7 +218,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL delete_doc(?)', [docId]);
             const [resultSetHeader] = queryResult;
-            console.log('deleteDoc - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('deleteDoc - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -246,7 +248,7 @@ export default class Database {
     async getClassNameAndMember(classId) {
         try {
             const queryResult = await this.pool.query('CALL get_class_members(?)', [classId]);
-            console.log('getClassNameAndMember - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getClassNameAndMember - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0][0];
         } catch (error) {
@@ -257,7 +259,7 @@ export default class Database {
     async getClassAttachFiles(classId, lecturerId) {
         try {
             const queryResult = await this.pool.query('CALL get_class_attach_files(?, ?)', [...arguments]);
-            console.log('getClassAttachFiles - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getClassAttachFiles - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0];
         } catch (error) {
@@ -269,7 +271,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL attach_file_to_class(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('attachFileToClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('attachFileToClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             if(resultSetHeader.affectedRows == 1)
                 return true;
             return false;
@@ -282,7 +284,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL remove_attach_file_from_class(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('removeAttachFileFromClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('removeAttachFileFromClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             if(resultSetHeader.affectedRows == 1)
                 return true;
             return false;
@@ -294,7 +296,7 @@ export default class Database {
     async getAllClassMember(classId) {
         try {
             const queryResult = await this.pool.query('CALL get_all_student_of_class(?)', [classId]);
-            console.log('getAllClassMember - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAllClassMember - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //id, login_id, name
         } catch (error) {
@@ -318,7 +320,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL create_exercise(?, ?, ?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('addExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('addExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             const { exercise_id } = queryResult[0][0][0];
 
             return exercise_id;
@@ -331,7 +333,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL update_exercise(?, ?, ?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('updateExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('updateExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -342,7 +344,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL reset_exercise_attach_file(?)', [exerciseId]);
             const [resultSetHeader] = queryResult;
-            console.log('resetExerciseAttachFile - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('resetExerciseAttachFile - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -353,7 +355,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL attach_file_to_exercise(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             if(resultSetHeader.affectedRows == 1)
                 return true;
             return false;
@@ -365,7 +367,7 @@ export default class Database {
     async getExerciseIds(classId) {
         try {
             const queryResult = await this.pool.query('CALL get_exercise_ids(?)', [classId]);
-            console.log('getExerciseIds - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getExerciseIds - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //id
         } catch (error) {
@@ -376,7 +378,7 @@ export default class Database {
     async getExerciseInfoForLecturer(exerciseId) {
         try {
             const queryResult = await this.pool.query('CALL get_lecturer_exercise_info(?)', [exerciseId]);
-            console.log('getExerciseInfoForLecturer - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getExerciseInfoForLecturer - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0][0]; //id, name, descriptions, start_time, end_time, submission_count
         } catch (error) {
@@ -387,7 +389,7 @@ export default class Database {
     async getAttachFileOfExercise(exerciseId) {
         try {
             const queryResult = await this.pool.query('CALL get_exercise_attach_files(?)', [exerciseId]);
-            console.log('getAttachFileOfExercise - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAttachFileOfExercise - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //id, name, descriptions, start_time, end_time, submission_count
         } catch (error) {
@@ -398,7 +400,7 @@ export default class Database {
     async getAllSubmittedExerciseFiles(exerciseId) {
         try {
             const queryResult = await this.pool.query('CALL get_all_submitted_exercise_files(?)', [exerciseId]);
-            console.log('getAllSubmittedExerciseFiles - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getAllSubmittedExerciseFiles - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //id, file-name
         } catch (error) {
@@ -410,7 +412,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL delete_exercise(?)', [exerciseId]);
             const [resultSetHeader] = queryResult;
-            console.log('lecturerDeleteExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('lecturerDeleteExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             if(resultSetHeader.affectedRows == 1)
                 return true;
             return false;
@@ -422,7 +424,7 @@ export default class Database {
     async getExerciseInfoForStudent(exerciseId, studentId) {
         try {
             const queryResult = await this.pool.query('CALL get_exercise_info_for_student(?, ?)', [...arguments]);
-            console.log('getExerciseInfoForStudent - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getExerciseInfoForStudent - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0][0]; //id, name, descriptions, start_time, end_time, submission_status
         } catch (error) {
@@ -433,7 +435,7 @@ export default class Database {
     async getOrCreateAndGetSubmittedExerciseId(exerciseId, studentId) {
         try {
             const queryResult = await this.pool.query('CALL get_or_create_n_get_submitted_exercise_id(?, ?)', [...arguments]);
-            console.log('getOrCreateAndGetSubmittedExerciseId - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getOrCreateAndGetSubmittedExerciseId - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0][0]; //id
         } catch (error) {
@@ -445,7 +447,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL attach_file_to_submitted_exercise(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             
             return queryResult[0][0][0];
         } catch (error) {
@@ -456,7 +458,7 @@ export default class Database {
     async getSubmittedExerciseFiles(exerciseId, studentId) {
         try {
             const queryResult = await this.pool.query('CALL get_submitted_exercise_files(?, ?)', [...arguments]);
-            console.log('getSubmittedExerciseFiles - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getSubmittedExerciseFiles - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //id, file_name
         } catch (error) {
@@ -468,7 +470,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL delete_submitted_exercise_attach_file(?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('attachFileToExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -479,7 +481,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL unsubmit_exercise(?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('unsubmitExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('unsubmitExercise - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -489,7 +491,7 @@ export default class Database {
     async getStudentsSubmissionStatus(classId, exerciseId) {
         try {
             const queryResult = await this.pool.query('CALL get_students_submission_status(?, ?)', [...arguments]);
-            console.log('getStudentsSubmissionStatus - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getStudentsSubmissionStatus - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //student_id, login_id, student_name, submission_status
         } catch (error) {
@@ -500,7 +502,7 @@ export default class Database {
     async getStudentsSubmissionStatusWithFiles(classId, exerciseId) {
         try {
             const queryResult = await this.pool.query('CALL get_students_submission_status_with_files(?, ?)', [...arguments]);
-            console.log('getStudentsSubmissionStatusWithFiles - QueryResult:', queryResult, '-----------------------------\n');
+            this.debug && console.log('getStudentsSubmissionStatusWithFiles - QueryResult:', queryResult, '-----------------------------\n');
 
             return queryResult[0][0]; //student_id, login_id, student_name, submission_status, submitted_files
         } catch (error) {
@@ -512,7 +514,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL get_meetings_by_class_id(?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('getAllMeetingOfClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('getAllMeetingOfClass - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return queryResult[0][0];
         } catch (error) {
             throw error;
@@ -523,7 +525,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL create_meeting(?, ?, ?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('addMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('addMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return queryResult[0][0][0];
         } catch (error) {
             throw error;
@@ -534,7 +536,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL delete_meeting(?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('deleteMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('deleteMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -545,7 +547,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL update_meeting(?, ?, ?, ?, ?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('updateMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('updateMeeting - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return true;
         } catch (error) {
             throw error;
@@ -556,7 +558,7 @@ export default class Database {
         try {
             const queryResult = await this.pool.execute('CALL get_meeting_by_id(?)', [...arguments]);
             const [resultSetHeader] = queryResult;
-            console.log('getMeetingById - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
+            this.debug && console.log('getMeetingById - ResultSetHeader:', resultSetHeader, '-----------------------------\n');
             return queryResult[0][0][0];
         } catch (error) {
             throw error;
@@ -566,7 +568,7 @@ export default class Database {
     async close() {
         try {
             await this.pool.end();
-            console.log('Database connection pool closed');
+            this.debug && console.log('Database connection pool closed');
         } catch (error) {
             throw new Error(`Error closing pool: ${error.message}`);
         }
