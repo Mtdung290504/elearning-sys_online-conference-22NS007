@@ -1,7 +1,7 @@
 import express from 'express';
 import middleWares from './middle-wares.js';
 import Database from '../model/database/database.js';
-import Utils from '../utils.js';
+import Utils, { PROJECT_ROOT } from '../utils.js';
 
 import path from 'path';
 
@@ -91,7 +91,7 @@ router.get('/:id/meet/:meetingCode', (req, res) => {
     const user = req.session.user;
     const role = req.session.role;
     // res.json({ classId: req.params.id, mettingCode: req.params.meetingCode, user: JSON.stringify(user) });
-    res.render(path.join(__dirname, 'views', 'meeting.ejs'), { user, role });
+    res.render(path.join(PROJECT_ROOT, 'views', 'meeting.ejs'), { user, role });
 });
 
 export default router;
